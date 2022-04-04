@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="vertical"
+    android:background="@color/black"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/black"
+
+
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/prflimgid"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@color/black"
+            android:layout_gravity="center"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/nameid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Harche Samir"
+                android:textSize="20dp"
+                android:paddingLeft="20dp"
+                />
+            <TextView
+                android:id="@+id/msgid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="are you there "
+                android:textColor="#696969"
+                android:textSize="20dp"
+                android:paddingLeft="30dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

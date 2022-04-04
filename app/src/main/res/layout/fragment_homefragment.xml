@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/drawerLayoutid"
+    tools:openDrawer="start"
+    android:background="@color/white"
+
+    tools:context=".homefragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/lnr"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="menu"
+            android:id="@+id/menubuttonid"
+            android:layout_gravity="start"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:text="notifs"
+            android:id="@+id/notifsid"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:layout_below="@+id/lnr"
+    android:orientation="vertical"
+    >
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        app:tabTextColor="@color/white"
+        android:layout_height="50dp"
+        android:id="@+id/tl"
+        app:tabMode="scrollable"
+        />
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:id="@+id/vpid"
+        android:layout_height="0dp"
+        android:layout_weight="100"
+        />
+
+</LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:id="@+id/navigationViewid"
+        app:headerLayout="@layout/header"
+        android:layout_gravity="start"
+        app:menu="@menu/menu"
+        />
+
+</androidx.drawerlayout.widget.DrawerLayout>

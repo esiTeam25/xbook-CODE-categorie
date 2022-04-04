@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/gamer i7 2021/AndroidStudioProjects/xbookbeta/app/src/main/res/layout/activity_login.xml" value="0.209375" />
+        <entry key="..\:/Users/gamer i7 2021/AndroidStudioProjects/xbookbeta/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/gamer i7 2021/AndroidStudioProjects/xbookbeta/app/src/main/res/layout/activity_signup.xml" value="0.209375" />
+        <entry key="..\:/Users/gamer i7 2021/AndroidStudioProjects/xbookbeta/app/src/main/res/layout/fragment_addbookfragment.xml" value="0.209375" />
+        <entry key="..\:/Users/gamer i7 2021/AndroidStudioProjects/xbookbeta/app/src/main/res/layout/fragment_chatfragment.xml" value="0.209375" />
+        <entry key="..\:/Users/gamer i7 2021/AndroidStudioProjects/xbookbeta/app/src/main/res/layout/fragment_homefragment.xml" value="0.209375" />
+        <entry key="..\:/Users/gamer i7 2021/AndroidStudioProjects/xbookbeta/app/src/main/res/layout/fragment_profilefragment.xml" value="0.25" />
+        <entry key="..\:/Users/gamer i7 2021/AndroidStudioProjects/xbookbeta/app/src/main/res/layout/header.xml" value="0.209375" />
+        <entry key="..\:/Users/gamer i7 2021/AndroidStudioProjects/xbookbeta/app/src/main/res/menu/menu.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/drawable/messageback.xml" value="0.1" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/drawable/msgrcvdback.xml" value="0.186" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/drawable/msgsnt.xml" value="0.186" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/drawable/msgsntback.xml" value="0.186" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/activity_chat.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/activity_checking_location.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/activity_first.xml" value="0.1" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/activity_login.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/activity_main.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/activity_signup.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/fragment_addbookfragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/fragment_chatfragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/fragment_homefragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/fragment_profilefragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/fragment_searchfragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/header.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/homefragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/msgrcvd.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/msgsnt.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/msgsntback.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/onebook.xml" value="0.25" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/oneuser.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.3/app/src/main/res/layout/oneuser2.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/drawable/msgrcvdback.xml" value="0.181" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/drawable/msgsntback.xml" value="0.181" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/activity_bookandpublisherdetails.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/activity_chat.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/activity_login.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/activity_main.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/activity_mapactivity.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/activity_signup.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/activity_userhistorybooks.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_addbookfragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment0.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment1.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment2.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment3.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment4.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment5.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment6.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment7.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment8.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_cfragment9.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_homefragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_profilefragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/fragment_searchfragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/homefragment.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/onebook.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/onecategorie.xml" value="0.209375" />
+        <entry key="..\:/xbookbeta2.4/app/src/main/res/layout/userbook.xml" value="0.209375" />
+        <entry key="..\:/xbookbetaerror2/app/src/main/res/layout/activity_locationbooks.xml" value="0.1" />
+        <entry key="..\:/xbookbetaerror2/app/src/main/res/layout/activity_main2.xml" value="0.1" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/activity_bookandpublisherdetails.xml" value="0.209375" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/activity_locationbooks.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/activity_main.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/activity_mapactivity.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_addbookfragment.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment0.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment1.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment2.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment3.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment4.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment5.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment6.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment7.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment8.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_cfragment9.xml" value="0.2046875" />
+        <entry key="..\:/xbookbetalocationsort/app/src/main/res/layout/fragment_homefragment.xml" value="0.2046875" />
+        <entry key="..\:/xbooktemp/app/src/main/res/layout/activity_chat.xml" value="0.209375" />
+        <entry key="..\:/xbooktemp/app/src/main/res/layout/activity_main.xml" value="0.209375" />
+        <entry key="..\:/xbooktemp/app/src/main/res/layout/onebook.xml" value="0.209375" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

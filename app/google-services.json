@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "996314528537",
+    "firebase_url": "https://xbookbeta-default-rtdb.firebaseio.com",
+    "project_id": "xbookbeta",
+    "storage_bucket": "xbookbeta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996314528537:android:86e19c9f8c2bf980f5e388",
+        "android_client_info": {
+          "package_name": "com.example.xbookbeta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996314528537-on57s0epr6nf3uja4353jtl3i1ubcchk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXLCnc0xy9fUu0DBXoxXFQm-xiOYtBn1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "996314528537-on57s0epr6nf3uja4353jtl3i1ubcchk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
