@@ -744,7 +744,7 @@ prgrsbr.setVisibility(View.INVISIBLE);
 
                     HashMap<String  ,Object> mp2 = new HashMap<>();
                     mp2.put("name" ,namestr);
-                    mp2.put("msg", "photo was sent by" + namestr);
+                    mp2.put("msg", "photo was sent by " + namestr);
                     mp2.put("state" , "n");
                     mp.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid().toString() );
                     mp2.put("time",ServerValue.TIMESTAMP );
