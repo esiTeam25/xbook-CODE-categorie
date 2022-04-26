@@ -64,7 +64,7 @@ public class recentadapter extends RecyclerView.Adapter<recentadapter.userholder
                 if (!snapshot.getValue().toString().equals("s")){
                     holder.msg.setTextColor(Color.parseColor("#FFFFFF"));
                     holder.msg.setTypeface(Typeface.DEFAULT_BOLD);
-                    holder.msg.setTextSize(TypedValue.COMPLEX_UNIT_SP,22);
+                    holder.msg.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
                 }
             }
 

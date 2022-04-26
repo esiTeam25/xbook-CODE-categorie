@@ -30,7 +30,7 @@
                 android:id="@+id/nameid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#696969"
                 android:text="Harche Samir"
                 android:textSize="20dp"
                 android:paddingLeft="20dp"
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="are you there "
-                android:textColor="#696969"
+                android:textColor="#343434"
                 android:textSize="20dp"
                 android:paddingLeft="30dp"
                 />
