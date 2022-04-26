@@ -3,7 +3,7 @@ package com.example.xbookbeta;
 import java.util.Date;
 
 public class onechat {
-    String senderid , receiverid , msg , date ;
+    String senderid , receiverid , msg , date  ;
    // public Date date ;
 
     public String getDate() {

@@ -49,7 +49,7 @@ public class locationbooks extends AppCompatActivity {
 
     private GeoFire geoFire = new GeoFire(FirebaseFirestore.getInstance().collection("books"));
     QueryLocation queryLocation = QueryLocation.fromDegrees(FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
-    Distance searchDistance = new Distance(5.0, DistanceUnit.KILOMETERS);
+    Distance searchDistance = new Distance(1.0, DistanceUnit.KILOMETERS);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,7 @@ public class locationbooks extends AppCompatActivity {
 
         key = null;
 
-         books.clear();
+        books.clear();
         rva.notifyItemRangeRemoved(0, books.size());
         rv = findViewById(R.id.recyclerView);
         prgrsbr = findViewById(R.id.prgrsbrid);
@@ -90,12 +90,7 @@ public class locationbooks extends AppCompatActivity {
 
     public void addelements(){
         prgrsbr.setVisibility(View.VISIBLE);
-
-
-
-
-
-       get().addSnapshotListener(new EventListener<QuerySnapshot>() {
+         get().addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (!isloading) {books.clear();}
@@ -111,6 +106,7 @@ public class locationbooks extends AppCompatActivity {
 
                 }
                 rva.notifyDataSetChanged();
+
                 rva.notifyItemRangeInserted(books.size() , books.size());
                 if(!isloading){
                     rv.smoothScrollToPosition(0);}
@@ -136,19 +132,19 @@ public class locationbooks extends AppCompatActivity {
 
 
 
-public Query get(){
-    if(key==null){
-       return geoFire.query()
-               .whereNearTo(queryLocation, searchDistance).limit(5)
-               .build() ;
+    public Query get(){
+        if(key==null){
+            return geoFire.query()
+                    .whereNearTo(queryLocation, searchDistance).limit(5)
+                    .build() ;
 
-    }else{
-        return geoFire.query()
-                .whereNearTo(queryLocation, searchDistance)
-                .startAfter(key).limit(5).build() ;
+        }else{
+            return geoFire.query()
+                    .whereNearTo(queryLocation, searchDistance)
+                    .startAfter(key).limit(5).build() ;
+        }
+
     }
-
-}
 
 
 }

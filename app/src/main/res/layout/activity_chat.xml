@@ -88,7 +88,15 @@
                 android:paddingTop="18dp"
                 android:paddingBottom="18dp"
                 >
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="50dp"
+                    android:id="@+id/sendphotoid"
+                    android:layout_height="50dp"
+                    android:padding="7dp"
+                    android:layout_gravity="center"
+                    android:src="#0000FF"
 
+                    />
 
                 <EditText
                     android:layout_width="match_parent"

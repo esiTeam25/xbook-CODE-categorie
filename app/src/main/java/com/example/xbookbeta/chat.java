@@ -7,13 +7,18 @@ import static java.text.DateFormat.getDateTimeInstance;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -40,9 +45,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.vansuita.pickimage.bean.PickResult;
+import com.vansuita.pickimage.bundle.PickSetup;
+import com.vansuita.pickimage.dialog.PickImageDialog;
+import com.vansuita.pickimage.listeners.IPickCancel;
+import com.vansuita.pickimage.listeners.IPickResult;
 
 import org.w3c.dom.Document;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +68,7 @@ public class chat extends AppCompatActivity {
     private CircleImageView back , prflimg ;
     private TextView name ;
     private RecyclerView rv ;
-    private CircleImageView send ;
+    private CircleImageView send , sendphoto ;
     private messagesadapter adptr ;
     private EditText mes;
     private String namestr , imgstr , imgstrr , text;
@@ -73,6 +86,7 @@ public class chat extends AppCompatActivity {
         back = findViewById(R.id.backid);
         rv = findViewById(R.id.rvid);
         send = findViewById(R.id.sendid);
+        sendphoto= findViewById(R.id.sendphotoid);
         mes  = findViewById(R.id.edittextid);
         msgslist = new ArrayList<>();
         msgslist2 = new ArrayList<>();
@@ -490,6 +504,58 @@ public class chat extends AppCompatActivity {
         });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        sendphoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //       PickImageDialog.build(new PickSetup()).show((FragmentActivity) v.getContext());
+
+                PickImageDialog.build(new PickSetup())
+                        .setOnPickResult(new IPickResult() {
+                            @Override
+                            public void onPickResult(PickResult r) {
+                                //  bookImage.setImageURI(r.getUri());
+                                CropImage.activity(r.getUri()).setAspectRatio(5, 8)
+                                        .start(chat.this);
+                            }
+                        })
+                        .setOnPickCancel(new IPickCancel() {
+                            @Override
+                            public void onCancelClick() {
+
+                            }
+                        }).show(chat.this);
+            } ;
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -591,6 +657,190 @@ prgrsbr.setVisibility(View.INVISIBLE);
 
     };
 */
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if (resultCode == RESULT_OK) {
+
+                Uri resultUri = result.getUri();
+
+
+                try {
+                    Bitmap bitmap = getResizedBitmap(MediaStore.Images.Media.getBitmap( this.getContentResolver(), resultUri ), 700);
+
+                    text = mes.getText().toString() ;
+                    HashMap<String , Object> message = new HashMap<>();
+                    message.put("senderid" , FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                    message.put("receiverid",getIntent().getExtras().getString("id") );
+                    message.put("msg" , convertBitmapToString(bitmap) );
+                    message.put("time" , new Date());
+                    message.put("realtime", ServerValue.TIMESTAMP );
+
+
+
+                   /* FirebaseFirestore.getInstance().collection("chat").document(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
+                            .collection(getIntent().getExtras().getString("id")).add(message);*/
+                    FirebaseDatabase.getInstance().getReference().child("chat").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
+                            .child(getIntent().getExtras().getString("id")).push().setValue(message);
+
+
+                   /* FirebaseFirestore.getInstance().collection("chat").document(getIntent().getExtras().getString("id"))
+                            .collection(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).add(message);*/
+
+                    FirebaseDatabase.getInstance().getReference().child("chat").child(getIntent().getExtras().getString("id"))
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push().setValue(message);
+
+
+
+
+               /*     FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.hasChild(getIntent().getExtras().getString("id"))){
+
+                                FirebaseDatabase.getInstance().getReference().child("recent").child("plus").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .child(getIntent().getExtras().getString("id")).child("msg").setValue(text);
+
+                                FirebaseDatabase.getInstance().getReference().child("recent").child("plus").child(getIntent().getExtras().getString("id"))
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("msg").setValue(text);
+
+                                FirebaseDatabase.getInstance().getReference().child("recent").child("plus").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .child(getIntent().getExtras().getString("id")).child("time").setValue(ServerValue.TIMESTAMP);
+
+                                FirebaseDatabase.getInstance().getReference().child("recent").child("plus").child(getIntent().getExtras().getString("id"))
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("time").setValue(ServerValue.TIMESTAMP);
+
+                                FirebaseDatabase.getInstance().getReference().child("recent").child("plus").child(getIntent().getExtras().getString("id"))
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("state").setValue("n");
+                                msgslist2.add("done") ;
+
+                            }
+                            if ( msgslist2.size()==0 ){*/
+                    HashMap<String  ,Object> mp = new HashMap<>();
+                    mp.put("name" ,name.getText().toString());
+                    mp.put("msg", "photo was sent by" + name.getText().toString() );
+                    mp.put("state" , "s");
+                    mp.put("id",getIntent().getExtras().getString("id") );
+                    mp.put("time", ServerValue.TIMESTAMP  );
+                    //  mp.put("image" , imgstr);
+                               /* FirebaseFirestore.getInstance().collection("recent").document("plus")
+                                        .collection(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
+                                        .document(getIntent().getExtras().getString("id")).set(mp);*/
+                    FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child(getIntent().getExtras().getString("id")).setValue(mp);
+
+
+
+
+
+                    HashMap<String  ,Object> mp2 = new HashMap<>();
+                    mp2.put("name" ,namestr);
+                    mp2.put("msg", "photo was sent by" + namestr);
+                    mp2.put("state" , "n");
+                    mp.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid().toString() );
+                    mp2.put("time",ServerValue.TIMESTAMP );
+                    //  mp2.put("image" , imgstrr);
+                               /* FirebaseFirestore.getInstance().collection("recent").document("plus")
+                                        .collection(getIntent().getExtras().getString("id"))
+                                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).set(mp2);*/
+                    FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
+                            .child(getIntent().getExtras().getString("id"))
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(mp2);
+
+                         /*   }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+
+
+                    });*/
+
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(chat.this , e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+
+            }
+            else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+
+                Exception error = result.getError();
+                Toast.makeText( chat.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        }
+
+
+
+
+    }
+
+    public  String convertBitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        String result = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        return result;
+    }
+
+
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
