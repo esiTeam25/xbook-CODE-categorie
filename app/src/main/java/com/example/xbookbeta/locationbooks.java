@@ -55,32 +55,35 @@ public class locationbooks extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locationbooks);
 
-        key = null;
-
-        books.clear();
-        rva.notifyItemRangeRemoved(0, books.size());
-        rv = findViewById(R.id.recyclerView);
-        prgrsbr = findViewById(R.id.prgrsbrid);
-        rv.setAdapter(rva);
-        rv.setHasFixedSize(true);
-        rv.setLayoutManager( new LinearLayoutManager(locationbooks.this));
-
-        addelements();
-
-        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(locationbooks.this)) {
-            @Override
-            public void onScrolledToEnd() {
-                Toast.makeText(locationbooks.this, "end", Toast.LENGTH_SHORT).show();
-                if (!isloading){
-
-                    isloading=true ;
-                    addelements();
 
 
 
+
+            key = null;
+
+            books.clear();
+            rva.notifyItemRangeRemoved(0, books.size());
+            rv = findViewById(R.id.recyclerView);
+            prgrsbr = findViewById(R.id.prgrsbrid);
+            rv.setAdapter(rva);
+            rv.setHasFixedSize(true);
+            rv.setLayoutManager(new LinearLayoutManager(locationbooks.this));
+
+            addelements();
+
+            rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(locationbooks.this)) {
+                @Override
+                public void onScrolledToEnd() {
+                    Toast.makeText(locationbooks.this, "end", Toast.LENGTH_SHORT).show();
+                    if (!isloading) {
+
+                        isloading = true;
+                        addelements();
+
+
+                    }
                 }
-            }
-        });
+            });
 
 
 

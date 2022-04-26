@@ -1,5 +1,7 @@
 package com.example.xbookbeta;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -76,7 +78,17 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         notifs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(v.getContext() , locationbooks.class));
+                if(FirstActivity.locationToUpload==null){
+
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setMessage("this functionality needs GPS autorisation")
+                            .setCancelable(true)
+                            ;
+                    final AlertDialog alert = builder.create();
+                    alert.show();
+
+                }else{
+                startActivity(new Intent(v.getContext() , locationbooks.class));}
             }
         });
 

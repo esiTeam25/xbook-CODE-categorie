@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 if ( FirstActivity.locationToUpload!=null ){
     Toast.makeText(MainActivity.this, FirstActivity.locationToUpload.latitude + "*" + FirstActivity.locationToUpload.latitude, Toast.LENGTH_SHORT).show();
 }
-
+vp.setOffscreenPageLimit(1);
        FirebaseDatabase.getInstance().getReference().child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("location")
                 .setValue( FirstActivity.locationToUpload ) ;
@@ -114,8 +114,8 @@ if ( FirstActivity.locationToUpload!=null ){
                 case 1 :
                     return new searchfragment();
                 case 2:
-                    return new addbookfragment();
-                case 3 :
+                      return new addbookfragment();
+                      case 3 :
                     return new chatfragment();
             }
             return new profilefragment();

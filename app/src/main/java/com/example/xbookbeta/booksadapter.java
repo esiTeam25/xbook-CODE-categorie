@@ -104,9 +104,9 @@ if(u.getBookimage() != null) {
         holder.title.setText(u.getTitle());}
             if(u.getCategorie()!=null) {
         holder.categorie.setText(u.getCategorie());}
-
-                    holder.distance.setText(String.format("%.2f", SphericalUtil.computeDistanceBetween(new LatLng(u.getLatitude(), u.getLongitude()), FirstActivity.locationToUpload) / 1000) + "km");
-
+if(FirstActivity.locationToUpload!=null) {
+    holder.distance.setText(String.format("%.2f", SphericalUtil.computeDistanceBetween(new LatLng(u.getLatitude(), u.getLongitude()), FirstActivity.locationToUpload) / 1000) + "km");
+}
         /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

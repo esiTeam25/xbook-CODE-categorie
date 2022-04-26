@@ -96,118 +96,88 @@ Boolean gonetosettings = false ;
       categorieSpinner.setAdapter(adapter);
       stateSpinner.setAdapter(adapter2);
 
+if(FirstActivity.locationToUpload==null){
+
+ v.findViewById(R.id.nogps).setVisibility(View.VISIBLE);
+    v.findViewById(R.id.allid).setVisibility(View.INVISIBLE);
+
+}else {
+
+    v.findViewById(R.id.nogps).setVisibility(View.INVISIBLE);
+    v.findViewById(R.id.allid).setVisibility(View.VISIBLE);
+
+    bookImage.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            //       PickImageDialog.build(new PickSetup()).show((FragmentActivity) v.getContext());
+
+            PickImageDialog.build(new PickSetup())
+                    .setOnPickResult(new IPickResult() {
+                        @Override
+                        public void onPickResult(PickResult r) {
+                            //  bookImage.setImageURI(r.getUri());
+                            CropImage.activity(r.getUri()).setAspectRatio(5, 8)
+                                    .start(getContext(), addbookfragment.this);
+                        }
+                    })
+                    .setOnPickCancel(new IPickCancel() {
+                        @Override
+                        public void onCancelClick() {
+
+                        }
+                    }).show((FragmentActivity) v.getContext());
+        }
+
+        ;
+
+    });
 
 
+    v.findViewById(R.id.addBookButton).setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
 
+            if (imageStringToUpload == null) {
+                Toast.makeText(v.getContext(), "select Image", Toast.LENGTH_SHORT).show();
+            } else if (title.getText().toString().equals("")) {
+                Toast.makeText(v.getContext(), "please insert title", Toast.LENGTH_SHORT).show();
 
+            } else if (categorieSpinner.getSelectedItem().toString().equals("select categorie")) {
+                Toast.makeText(v.getContext(), "please select categorie", Toast.LENGTH_SHORT).show();
+            } else if (stateSpinner.getSelectedItem().toString().equals("select state")) {
+                Toast.makeText(v.getContext(), "please select state", Toast.LENGTH_SHORT).show();
 
+            } else {
+                ProgressDialog wait = new ProgressDialog(v.getContext());
+                wait.setTitle("wait");
+                wait.setMessage("wait");
+                wait.show();
+                HashMap<String, Object> dataaa = new HashMap<>();
+                dataaa.put("title", title.getText().toString());
+                dataaa.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                dataaa.put("categorie", categorieSpinner.getSelectedItem().toString());
+                dataaa.put("state", stateSpinner.getSelectedItem().toString());
+                dataaa.put("image", imageStringToUpload);
+                dataaa.put("lat", FirstActivity.locationToUpload.latitude);
+                dataaa.put("lng", FirstActivity.locationToUpload.longitude);
 
-
-
-
-
-        bookImage.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-      //       PickImageDialog.build(new PickSetup()).show((FragmentActivity) v.getContext());
-
-             PickImageDialog.build(new PickSetup())
-                     .setOnPickResult(new IPickResult() {
-                         @Override
-                         public void onPickResult(PickResult r) {
-                           //  bookImage.setImageURI(r.getUri());
-                             CropImage.activity(r.getUri()).setAspectRatio(5, 8)
-                                     .start(getContext(), addbookfragment.this);
-                         }
-                     })
-                     .setOnPickCancel(new IPickCancel() {
-                         @Override
-                         public void onCancelClick() {
-
-                         }
-                     }).show((FragmentActivity) v.getContext());
-         } ;
-
-     });
-        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-
-        builder.setTitle("Allow location permission");
-        builder.setMessage("location permission need to be allowed");
-
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID));
-                startActivity(i);
-                gonetosettings = true ;
-
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                // Do nothing
-                dialog.dismiss();
-            }
-        });
-
-
-
-     v.findViewById(R.id.addBookButton).setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-          if(FirstActivity.locationToUpload == null){
-              AlertDialog alert = builder.create();
-              alert.show();
-}
-else{
-             if(imageStringToUpload == null){
-                 Toast.makeText(v.getContext(), "select Image", Toast.LENGTH_SHORT).show();
-             }else if( title.getText().toString().equals("")){
-                 Toast.makeText(v.getContext(), "please insert title", Toast.LENGTH_SHORT).show();
-
-             }
-             else if(categorieSpinner.getSelectedItem().toString().equals("select categorie")){
-                 Toast.makeText(v.getContext(), "please select categorie", Toast.LENGTH_SHORT).show();
-             }else if(stateSpinner.getSelectedItem().toString().equals("select state")){
-                 Toast.makeText(v.getContext(), "please select state", Toast.LENGTH_SHORT).show();
-
-             }else {
-                 ProgressDialog wait = new ProgressDialog(v.getContext());
-                 wait.setTitle("wait");
-                 wait.setMessage("wait");
-                 wait.show();
-                 HashMap<String, Object> dataaa = new HashMap<>();
-                 dataaa.put("title", title.getText().toString());
-                dataaa.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid().toString()) ;
-                 dataaa.put("categorie", categorieSpinner.getSelectedItem().toString());
-                 dataaa.put("state", stateSpinner.getSelectedItem().toString());
-                 dataaa.put("image", imageStringToUpload);
-                 dataaa.put("lat", FirstActivity.locationToUpload.latitude);
-                 dataaa.put("lng" , FirstActivity.locationToUpload.longitude);
-
-                 FirebaseFirestore.getInstance().collection("books").add(dataaa)
+                FirebaseFirestore.getInstance().collection("books").add(dataaa)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                             @Override
-                             public void onSuccess(DocumentReference documentReference) {
-                                 geoFire.setLocation(documentReference.getId() , FirstActivity.locationToUpload.latitude , FirstActivity.locationToUpload.longitude   );
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                geoFire.setLocation(documentReference.getId(), FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
 
                                 wait.dismiss();
 
-                             }
-                         });
+                            }
+                        });
 
 
+            }
+        }
 
-             }
-  }
-   }
-     });
-
+    });
+}
 
 
 
@@ -215,14 +185,7 @@ else{
         return v ;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(gonetosettings) {
-            startActivity(new Intent(getContext(), FirstActivity.class));
 
-        }
-    }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -233,9 +196,7 @@ else{
             if (resultCode == RESULT_OK) {
 
                 Uri resultUri = result.getUri();
-                   // bookImage = getView().findViewById(R.id.bookImageId);
-                   // bookImage.setImageURI(resultUri);
-                   // bookImage.setImageBitmap(result.getBitmap());
+
 
                 try {
                     Bitmap bitmap = getResizedBitmap(MediaStore.Images.Media.getBitmap( getContext().getContentResolver(), resultUri ), 700);
