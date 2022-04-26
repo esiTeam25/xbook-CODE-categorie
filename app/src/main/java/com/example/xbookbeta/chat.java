@@ -726,7 +726,7 @@ prgrsbr.setVisibility(View.INVISIBLE);
                             if ( msgslist2.size()==0 ){*/
                     HashMap<String  ,Object> mp = new HashMap<>();
                     mp.put("name" ,name.getText().toString());
-                    mp.put("msg", "photo was sent by " + name.getText().toString() );
+                    mp.put("msg", "photo was sent by "+name.getText().toString() );
                     mp.put("state" , "s");
                     mp.put("id",getIntent().getExtras().getString("id") );
                     mp.put("time", ServerValue.TIMESTAMP  );
@@ -744,7 +744,7 @@ prgrsbr.setVisibility(View.INVISIBLE);
 
                     HashMap<String  ,Object> mp2 = new HashMap<>();
                     mp2.put("name" ,namestr);
-                    mp2.put("msg", "photo was sent by " + namestr);
+                    mp2.put("msg", "photo was sent by "+ namestr);
                     mp2.put("state" , "n");
                     mp.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid().toString() );
                     mp2.put("time",ServerValue.TIMESTAMP );
