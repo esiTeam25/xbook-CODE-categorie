@@ -726,7 +726,7 @@ prgrsbr.setVisibility(View.INVISIBLE);
                             if ( msgslist2.size()==0 ){*/
                     HashMap<String  ,Object> mp = new HashMap<>();
                     mp.put("name" ,name.getText().toString());
-                    mp.put("msg", "photo was sent by" + name.getText().toString() );
+                    mp.put("msg", "photo was sent by " + name.getText().toString() );
                     mp.put("state" , "s");
                     mp.put("id",getIntent().getExtras().getString("id") );
                     mp.put("time", ServerValue.TIMESTAMP  );
