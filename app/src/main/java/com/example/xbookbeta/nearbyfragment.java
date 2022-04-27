@@ -1,40 +1,26 @@
 package com.example.xbookbeta;
 
-import static android.content.ContentValues.TAG;
-
-import android.app.ProgressDialog;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import uk.co.mgbramwell.geofire.android.GeoFire;
 import uk.co.mgbramwell.geofire.android.model.Distance;
@@ -43,47 +29,77 @@ import uk.co.mgbramwell.geofire.android.model.QueryLocation;
 
 
 public class nearbyfragment extends Fragment {
-    RecyclerView rv ;
-    Boolean end = false ;
-    booksadapter rva =  new booksadapter(books); ;
-    Boolean isloading = false ;
-    DocumentSnapshot key = null ;
+    /*   RecyclerView rv ;
+       Boolean end = false ;
+       booksadapter rva =  new booksadapter(books); ;
+       Boolean isloading = false ;
+       DocumentSnapshot key = null ;
+       public static ArrayList<onebook> books = new ArrayList<>() ;
+
+       private GeoFire geoFire = new GeoFire(FirebaseFirestore.getInstance().collection("books"));
+       QueryLocation queryLocation = QueryLocation.fromDegrees(FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
+       Distance searchDistance = new Distance(1000.0, DistanceUnit.KILOMETERS);
+       EndlessRecyclerOnScrollListener listen = new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getContext())) {
+           @Override
+           public void onScrolledToEnd() {
+               if (!isloading) {
+                   isloading = true;
+                   addelements();
+
+
+               }
+           }
+       } ;
+   */
+    MapView mapView;
+    GoogleMap map;
     public static ArrayList<onebook> books = new ArrayList<>() ;
 
     private GeoFire geoFire = new GeoFire(FirebaseFirestore.getInstance().collection("books"));
     QueryLocation queryLocation = QueryLocation.fromDegrees(FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
     Distance searchDistance = new Distance(1000.0, DistanceUnit.KILOMETERS);
-    EndlessRecyclerOnScrollListener listen = new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getContext())) {
-        @Override
-        public void onScrolledToEnd() {
-            if (!isloading) {
-                isloading = true;
-                addelements();
-
-
-            }
-        }
-    } ;
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_searchfragment, container, false) ;
-      //  key = null;
-
+        View v = inflater.inflate(R.layout.fragment_nearbyfragment, container, false);
+        //  key = null;
+/*
         rv = view.findViewById(R.id.rvid);
         rv.setAdapter(rva);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rv.setHasFixedSize(true);
+*/
 
-        return view ;
+
+        mapView = (MapView) v.findViewById(R.id.mapid);
+        mapView.onCreate(savedInstanceState);
+
+        // Gets to GoogleMap from the MapView and does initialization stuff
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+
+
+        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+        MapsInitializer.initialize(this.getActivity());
+
+        // Updates the location and zoom of the MapView
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
+        map.animateCamera(cameraUpdate);
+
+
+
+
+
+
+
+
+
+        return v ;
     }
 
 
 
 
-
+/*
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -123,8 +139,7 @@ public class nearbyfragment extends Fragment {
                 rva.notifyDataSetChanged();
 
                 rva.notifyItemRangeInserted(books.size() , books.size());
-               /* if(!isloading){
-                    rv.smoothScrollToPosition(0);}*/
+
                 isloading=false ;
 
             }
@@ -167,11 +182,29 @@ public class nearbyfragment extends Fragment {
 
 
 
+*/
 
 
 
 
 
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
 
 
 

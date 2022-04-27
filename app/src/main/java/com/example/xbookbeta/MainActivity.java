@@ -76,7 +76,7 @@ vp.setOffscreenPageLimit(1);
                 case 0 :
                     return new homefragment();
                 case 1 :
-                    return new nearbyfragment();
+                    return new MapsFragmentNearby();
                 case 2:
                       return new addbookfragment();
                       case 3 :
