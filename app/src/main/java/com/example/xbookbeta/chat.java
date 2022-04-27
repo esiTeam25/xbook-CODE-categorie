@@ -64,7 +64,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class chat extends AppCompatActivity {
+public class
+chat extends AppCompatActivity {
     private CircleImageView back , prflimg ;
     private TextView name ;
     private RecyclerView rv ;
@@ -134,13 +135,8 @@ public class chat extends AppCompatActivity {
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                      //  for ( DataSnapshot ds : snapshot.getChildren()) {
 
                             onechat one = new onechat(
-                               /* documentChange.getDocument().getString("senderid"),
-                                documentChange.getDocument().getString("receiverid"),
-                                documentChange.getDocument().getString("msg"),
-                                documentChange.getDocument().getDate("time")*/
                                     snapshot.child("senderid").getValue().toString(),
                                     snapshot.child("receiverid").getValue().toString(),
                                     snapshot.child("msg").getValue().toString(),
@@ -148,7 +144,6 @@ public class chat extends AppCompatActivity {
 
                             );
                             msgslist.add(one);
-                       // }
                         adptr.notifyDataSetChanged();
                         adptr.notifyItemRangeInserted(msgslist.size(), msgslist.size());
                         rv.smoothScrollToPosition(msgslist.size());
