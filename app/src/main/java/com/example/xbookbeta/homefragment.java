@@ -11,6 +11,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -18,18 +20,35 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 
 public class homefragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener   {
     private TabLayout tl ;
-    private ViewPager vp ;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout ;
     private Button menubutton , notifs ;
+    ProgressBar prgrsbr;
+    RecyclerView rv ;
+    Boolean end = false ;
+    booksadapter rva =  new booksadapter(books); ;
+    Boolean isloading = false ;
+    DocumentSnapshot key = null ;
+    public static ArrayList<onebook> books = new ArrayList<>() ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,12 +56,10 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         drawerLayout = v.findViewById(R.id.drawerLayoutid);
         navigationView = v.findViewById(R.id.navigationViewid);
         menubutton = v.findViewById(R.id.menubuttonid);
+        prgrsbr = v.findViewById(R.id.prgrsbrid);
         notifs = v.findViewById(R.id.notifsid);
         navigationView.setNavigationItemSelectedListener(this);
         tl = v.findViewById(R.id.tl);
-        vp = v.findViewById(R.id.vpid);
-        vp.setAdapter(new vadapter(getChildFragmentManager()));
-        tl.setupWithViewPager(vp);
         menubutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,12 +80,469 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
+        TabLayout.Tab tab0 = tl.newTab() ;
+        tab0.setText("all");
+        TabLayout.Tab tab1 = tl.newTab() ;
+        tab1.setText("one");
+        TabLayout.Tab tab2 = tl.newTab() ;
+        tab2.setText("two");
+        TabLayout.Tab tab3 = tl.newTab() ;
+        tab3.setText("three");
+        TabLayout.Tab tab4 = tl.newTab() ;
+        tab4.setText("four");
+        TabLayout.Tab tab5 = tl.newTab() ;
+        tab5.setText("five");
+        TabLayout.Tab tab6 = tl.newTab() ;
+        tab6.setText("six");
+        TabLayout.Tab tab7 = tl.newTab() ;
+        tab7.setText("seven");
+        TabLayout.Tab tab8 = tl.newTab() ;
+        tab8.setText("eight");
+        TabLayout.Tab tab9 = tl.newTab() ;
+        tab9.setText("nine");
+
+        tl.addTab(tab0);
+        tl.addTab(tab1);
+        tl.addTab(tab2);
+        tl.addTab(tab3);
+        tl.addTab(tab4);
+        tl.addTab(tab5);
+        tl.addTab(tab6);
+        tl.addTab(tab7);
+        tl.addTab(tab8);
+        tl.addTab(tab9);
+
+        key=null ;
+        rv = v.findViewById(R.id.recyclerView);
+        rv.setLayoutManager( new LinearLayoutManager(v.getContext()));
+        rv.setHasFixedSize(true);
+
+        books.clear();
+        rva.notifyItemRangeRemoved(0 ,books.size());
+        rv.setAdapter(rva);
+
+
+
+        addelements(get());
+
+
+
+        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+            @Override
+            public void onScrolledToEnd() {
+                if (!isloading){
+
+                    isloading=true ;
+
+                    addelements(get());
+
+
+
+
+                }
+            }
+        });
 
 
 
 
 
 
+
+
+
+        tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+
+                    case 0:
+
+
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(get());
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(get());
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+
+                        break;
+                    case 1:
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(getc("categorie1"));
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(getc("categorie1"));
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+
+                        break;
+
+                    case 2:
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(getc("categorie2"));
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(getc("categorie2"));
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+
+                        break;
+
+
+                    case 3:
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(getc("categorie3"));
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(getc("categorie3"));
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+
+                        break;
+
+
+                    case 4:
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(getc("categorie4"));
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(getc("categorie4"));
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+                        break;
+                    case 5:
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(getc("categorie5"));
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(getc("categorie5"));
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+                        break;
+
+                    case 6:
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(getc("categorie6"));
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(getc("categorie6"));
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+                        break;
+
+                    case 7:
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(getc("categorie7"));
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(getc("categorie7"));
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+                        break;
+
+                    case 8:
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(getc("categorie8"));
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(getc("categorie8"));
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+                        break;
+
+                    case 9:
+
+
+                        key=null ;
+
+                        books.clear();
+                        rva.notifyItemRangeRemoved(0 ,books.size());
+                        rv.setAdapter(rva);
+
+
+
+                        addelements(getc("categorie9"));
+
+
+
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                            @Override
+                            public void onScrolledToEnd() {
+                                if (!isloading){
+
+                                    isloading=true ;
+
+                                    addelements(getc("categorie9"));
+
+
+
+
+                                }
+                            }
+                        });
+
+
+
+
+                        break;
+
+
+
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 
 
@@ -93,74 +567,6 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-    public class vadapter extends FragmentPagerAdapter {
-        public vadapter(@NonNull FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return 10;
-        }
-
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-
-            switch (position){
-                case 0 :
-                    return new cfragment0();
-                case 2 :
-                    return new cfragment2();
-                case 3 :
-                    return new cfragment3();
-                case 4 :
-                    return new cfragment4();
-                case 5 :
-                    return new cfragment5();
-                case 6 :
-                    return new cfragment6();
-                case 7 :
-                    return new cfragment7();
-                case 8 :
-                    return new cfragment8();
-                case 9 :
-                    return new cfragment9();
-
-            }
-            return new cfragment1();
-        }
-
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position){
-                case 0 :
-                    return "categorie0" ;
-                case 2 :
-                    return  "categorie2" ;
-                case 3 :
-                    return  "categorie3" ;
-                case 4 :
-                    return  "categorie4" ;
-                case 5 :
-                    return  "categorie5" ;
-                case 6 :
-                    return  "categorie6" ;
-                case 7 :
-                    return  "categorie7" ;
-                case 8 :
-                    return "categorie8" ;
-                case 9 :
-                    return  "categorie9" ;
-
-            }
-            return "categorie1" ;
-        }
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         FirebaseAuth.getInstance().signOut();
@@ -169,6 +575,84 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         return false;
     }
 
+
+
+
+    public void addelements(Query get ){
+
+
+        prgrsbr.setVisibility(View.VISIBLE);
+
+
+
+        get.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (!isloading) {books.clear();}
+                for (DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        books.add(
+                                new
+                                        onebook(dc.getDocument().getString("id") , dc.getDocument().getString("image") ,dc.getDocument().getString("title") , dc.getDocument().getString("categorie") , dc.getDocument().getDouble("lat")  , dc.getDocument().getDouble("lng"))) ;
+                        key =  dc.getDocument();
+                    }
+
+
+
+                }
+                rva.notifyDataSetChanged();
+                rva.notifyItemRangeInserted(books.size() , books.size());
+                if(!isloading){
+                    rv.smoothScrollToPosition(0);}
+                isloading=false ;
+                prgrsbr.setVisibility(View.INVISIBLE);
+
+                //  rv.smoothScrollToPosition(0);
+            }
+
+        });
+
+
+
+    }
+
+
+
+
+    public void fetchData( Query get  ){
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+    public Query get(){
+        if (key== null ) {
+
+            return FirebaseFirestore.getInstance().collection("books").limit(5) ;
+        }
+        else {
+            return FirebaseFirestore.getInstance().collection("books").startAfter(key).limit(5);
+        }
+    }
+
+    public Query getc(String c){
+        if (key== null ) {
+
+            return FirebaseFirestore.getInstance().collection("books").whereEqualTo("categorie" , c).limit(5) ;
+        }
+        else {
+            return FirebaseFirestore.getInstance().collection("books").whereEqualTo("categorie" , c).startAfter(key).limit(5);
+        }
+    }
 
 
 
