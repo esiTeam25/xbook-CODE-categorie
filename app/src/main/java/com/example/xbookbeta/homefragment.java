@@ -53,18 +53,9 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         notifs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(FirstActivity.locationToUpload==null){
 
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setMessage("this functionality needs GPS autorisation")
-                            .setCancelable(true)
-                            ;
-                    final AlertDialog alert = builder.create();
-                    alert.show();
-
-                }else{
                 startActivity(new Intent(v.getContext() , search.class));}
-            }
+
         });
 
 
