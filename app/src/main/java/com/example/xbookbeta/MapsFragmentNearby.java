@@ -155,6 +155,10 @@ public class MapsFragmentNearby extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+
+
+
+
             if(FirstActivity.locationToUpload==null) {
 
                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -163,12 +167,16 @@ public class MapsFragmentNearby extends Fragment {
                 ;
                  AlertDialog alert = builder.create();
                 alert.show();
-            }else{SupportMapFragment mapFragment =
+            }else{
+                SupportMapFragment mapFragment =
                     (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
                 if (mapFragment != null) {
                     mapFragment.getMapAsync(callback);
 
-                }}
+                }
+
+
+            }
 
         }else{
             // fragment is no longer visible

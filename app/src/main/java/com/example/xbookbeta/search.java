@@ -1,12 +1,18 @@
 package com.example.xbookbeta;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.AbsListView;
 import android.widget.GridView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -23,7 +29,7 @@ public class search extends AppCompatActivity {
     private GridView gridView ;
     public static ArrayList<onebook> books = new ArrayList<>() ;
     DocumentSnapshot key = null ;
-    Boolean _areLecturesLoaded =false;
+    SearchView searchView;
 
 
     @Override
@@ -37,22 +43,13 @@ public class search extends AppCompatActivity {
 
 
         key=null ;
-
         books.clear();
         gridadptr.notifyDataSetChanged();
         gridView = findViewById(R.id.gridid);
         gridView.setAdapter(gridadptr);
+        searchView=findViewById(R.id.searchView);
         addelements(gridadptr);
-
-
-
-
-
-
-
-
-
-        gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        AbsListView.OnScrollListener listen = new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
 
@@ -70,6 +67,42 @@ public class search extends AppCompatActivity {
 
 
                     }                }
+            }
+        } ;
+ gridView.setOnScrollListener(listen);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+             books.clear();
+                gridView.setOnScrollListener(null);
+                gridadptr.notifyDataSetChanged();
+                ProgressDialog wait = new ProgressDialog(search.this);
+                wait.setTitle("wait");
+                wait.setMessage("wait");
+                wait.show();
+                FirebaseFirestore.getInstance().collection("books").whereEqualTo("title" , query).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        books.clear();
+                        gridadptr.notifyDataSetChanged();
+                        for(DocumentSnapshot dc : task.getResult()){
+                            books.add(
+                                    new
+                                            onebook(dc.getString("id") , dc.getString("image") ,dc.getString("title") , dc.getString("categorie") , dc.getDouble("lat")  , dc.getDouble("lng"))) ;
+                        }
+                        gridadptr.notifyDataSetChanged();
+wait.dismiss();
+                        if(books.isEmpty()) Toast.makeText(search.this, "there is no results", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //    adapter.getFilter().filter(newText);
+                return false;
             }
         });
 
