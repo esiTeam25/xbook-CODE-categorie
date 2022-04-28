@@ -167,13 +167,12 @@ public class userhistorybooks extends AppCompatActivity {
     public Query get(){
         if (key== null ) {
 
-            return FirebaseFirestore.getInstance().collection(FirebaseAuth.getInstance().getUid().toString()).limit(5) ;
+            return FirebaseFirestore.getInstance().collection("books").whereEqualTo("id" , FirebaseAuth.getInstance().getCurrentUser().getUid()).limit(5) ;
         }
         else {
-            return FirebaseFirestore.getInstance().collection(FirebaseAuth.getInstance().getUid().toString()).startAfter(key).limit(5);
+            return FirebaseFirestore.getInstance().collection("books").whereEqualTo("id" , FirebaseAuth.getInstance().getCurrentUser().getUid()).startAfter(key).limit(5);
         }
     }
-
 
 
 
