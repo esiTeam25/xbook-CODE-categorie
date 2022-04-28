@@ -1,6 +1,7 @@
 package com.example.xbookbeta;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -12,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 public class CourseGVAdapter extends ArrayAdapter<onebook> {
@@ -35,6 +39,20 @@ public class CourseGVAdapter extends ArrayAdapter<onebook> {
         byte[] decodedString2 = Base64.decode(courseModel.getBookimage(), Base64.DEFAULT);
         Bitmap decodedByte2 = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
         courseIV.setImageBitmap(decodedByte2);
+        courseIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mapactivity.point = new LatLng( courseModel.getLatitude() , courseModel.getLongitude());
+                mapactivity.name = courseModel.getTitle() ;
+
+
+                bookandpublisherdetails.bookimage = decodedByte2 ;
+                mapactivity.image = decodedByte2 ;
+                Intent i = new Intent( view.getContext() , bookandpublisherdetails.class );
+                i.putExtra("id" , courseModel.getUserid());
+                view.getContext().startActivity(i);
+            }
+        });
         return listitemView;
     }
 }
