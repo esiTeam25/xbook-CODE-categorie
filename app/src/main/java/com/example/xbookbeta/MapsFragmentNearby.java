@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -47,7 +48,7 @@ import uk.co.mgbramwell.geofire.android.model.Distance;
 import uk.co.mgbramwell.geofire.android.model.DistanceUnit;
 import uk.co.mgbramwell.geofire.android.model.QueryLocation;
 
-public class MapsFragmentNearby extends Fragment {
+public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerClickListener{
 
 
 
@@ -89,7 +90,19 @@ public class MapsFragmentNearby extends Fragment {
                             googleMap.addMarker(new MarkerOptions()
                                     .position(new LatLng(dc.getDocument().getDouble("lat"), dc.getDocument().getDouble("lng")))
                                     .title(dc.getDocument().getString("title")).icon(BitmapDescriptorFactory.fromBitmap(getResizedBitmap(getRoundedCornerBitmap(decodedByte , 10) , 100 , 160))))
-                            .setTag(i++);
+                            ;
+
+
+
+                            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                @Override
+                                public boolean onMarkerClick(Marker marker) {
+                                    Intent i = new Intent( getContext() , bookandpublisherdetails.class );
+bookandpublisherdetails.key=dc.getDocument().getId();
+getContext().startActivity(i);
+                                    Toast.makeText(getContext(), "aoihg", Toast.LENGTH_SHORT).show();                                    return false;
+                                }
+                            });
 
 
                         }
@@ -231,13 +244,9 @@ public class MapsFragmentNearby extends Fragment {
     }
 
 
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
 
-
-
-
-
-
-
-
-
+        return false;
+    }
 }

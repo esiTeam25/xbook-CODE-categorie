@@ -1,42 +1,66 @@
 package com.example.xbookbeta;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.ortiz.touchview.TouchImageView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class bookandpublisherdetails extends AppCompatActivity {
-static  Bitmap bookimage = null ;
+static  String bookimage = null ;
     TouchImageView bookImage;
+    String id ;
+    static  String profileimage ;
+    CircleImageView profileprofile ;
     public static String key ;
+    public static String name;
+    TextView namee ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookandpublisherdetails);
         bookImage = findViewById(R.id.bookImageId);
-        bookImage.setImageBitmap(bookimage);
-        if (getIntent().getExtras().get("id").equals(FirebaseAuth.getInstance().getUid().toString())) {
-            findViewById(R.id.sendmessageid).setVisibility(View.INVISIBLE);
-            findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
-            findViewById(R.id.phonecallid).setVisibility(View.INVISIBLE);
-        }
-        Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
-
-
-
+        profileprofile = findViewById(R.id.profileImageId);
+        namee = findViewById(R.id.profileNameid);
+        if (bookimage!=null) {
+            namee.setText(name);
+            byte[] decodedString2 = Base64.decode(bookimage, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
+            bookImage.setImageBitmap(decodedByte) ;
+            if(profileimage.length()>10) {
+                decodedString2 = Base64.decode(profileimage, Base64.DEFAULT);
+                decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
+                profileprofile.setImageBitmap(decodedByte);
+            }
             findViewById(R.id.sendmessageid).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(view.getContext(), chat.class);
-                    i.putExtra("id", getIntent().getExtras().getString("id"));
+                    if(getIntent().getExtras()!=null){
+                        i.putExtra("id", getIntent().getExtras().getString("id"));}
+                    else{i.putExtra("id", id);}
                     i.putExtra("key" , key) ;
                     i.putExtra("x", "2");
                     startActivity(i);
@@ -45,7 +69,75 @@ static  Bitmap bookimage = null ;
             findViewById(R.id.locationid).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id", getIntent().getExtras().getString("id")));
+                    if(getIntent().getExtras()!=null) {
+                        startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id", getIntent().getExtras().getString("id")));
+                    }else{
+                        startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id",id));
+
+
+                    }}
+            });
+            findViewById(R.id.phonecallid).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:0558585327"));
+                    startActivity(intent);
+                }
+            });
+        }
+        else {
+            findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
+
+            FirebaseFirestore.getInstance().collection("books").document(key).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    id = task.getResult().getString("id");
+                    String imagestr = task.getResult().getString("image");
+
+                        byte[] decodedString = Base64.decode(imagestr, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        bookImage.setImageBitmap(decodedByte);
+
+                        if (id.equals(FirebaseAuth.getInstance().getUid().toString())) {
+                            findViewById(R.id.sendmessageid).setVisibility(View.INVISIBLE);
+                            findViewById(R.id.phonecallid).setVisibility(View.INVISIBLE);
+                        }
+
+                    DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
+                            .child(id);
+                    account.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            namee.setText(snapshot.child("name").getValue().toString());
+                            String profileimagefor = snapshot.child("image").getValue().toString();
+                            if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
+                                byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
+                                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                                profileprofile.setImageBitmap(decodedByte);
+                             //   holder.profilename.setText(snapshot.child("name").getValue().toString());
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+            });
+
+            findViewById(R.id.sendmessageid).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(view.getContext(), chat.class);
+
+                    i.putExtra("id", id);
+                    i.putExtra("key" , key) ;
+                    i.putExtra("x", "2");
+                    startActivity(i);
                 }
             });
             findViewById(R.id.phonecallid).setOnClickListener(new View.OnClickListener() {
@@ -56,6 +148,12 @@ static  Bitmap bookimage = null ;
                     startActivity(intent);
                 }
             });
+        }
+
+
+
+
+
         }
 
 }

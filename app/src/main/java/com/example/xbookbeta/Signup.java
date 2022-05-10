@@ -53,6 +53,7 @@ TextView password  , name;
                                 HashMap<String ,Object> data = new HashMap<>() ;
                                 data.put("name",name.getText().toString() );
                                 data.put("image" , "" );
+                                data.put("books" , 0);
                                 data.put("id" , FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
                                 data.put("location" , new LatLng(0,0));
                                 FirebaseDatabase.getInstance().getReference().

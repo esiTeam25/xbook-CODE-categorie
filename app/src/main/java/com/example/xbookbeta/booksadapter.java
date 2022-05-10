@@ -33,6 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class booksadapter extends RecyclerView.Adapter<booksadapter.bookholder> {
     private ArrayList<onebook> bookslist ;
+    String profileimagefor;
 
     public booksadapter(ArrayList<onebook> bookslist) {
         this.bookslist = bookslist;
@@ -78,11 +79,11 @@ public class booksadapter extends RecyclerView.Adapter<booksadapter.bookholder> 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 holder.profilename.setText(snapshot.child("name").getValue().toString());
+                profileimagefor = snapshot.child("image").getValue().toString();
                 if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
                     byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                     holder.profileimage.setImageBitmap(decodedByte);
-                    holder.profilename.setText(snapshot.child("name").getValue().toString());
 
                 }
             }
@@ -123,12 +124,11 @@ if(FirstActivity.locationToUpload!=null) {
             public void onClick(View view) {
                 mapactivity.point = new LatLng( u.getLatitude() , u.getLongitude());
                 mapactivity.name = u.getTitle() ;
-
-                    byte[] decodedString2 = Base64.decode(u.getBookimage(), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
-                   bookandpublisherdetails.bookimage = decodedByte ;
-                   bookandpublisherdetails.key = u.getKey();
-                mapactivity.image = decodedByte ;
+                bookandpublisherdetails.name = holder.profilename.getText().toString();
+                   bookandpublisherdetails.bookimage = u.getBookimage() ;
+bookandpublisherdetails.profileimage = profileimagefor ;
+                bookandpublisherdetails.key = u.getKey();
+                mapactivity.image = u.getBookimage(); ;
                 Intent i = new Intent( view.getContext() , bookandpublisherdetails.class );
                 i.putExtra("id" , u.getUserid());
                 view.getContext().startActivity(i);

@@ -46,8 +46,8 @@ public class CourseGVAdapter extends ArrayAdapter<onebook> {
                 mapactivity.name = courseModel.getTitle() ;
 
 
-                bookandpublisherdetails.bookimage = decodedByte2 ;
-                mapactivity.image = decodedByte2 ;
+                bookandpublisherdetails.bookimage = courseModel.getBookimage() ;
+                mapactivity.image =  courseModel.getBookimage() ;
                 Intent i = new Intent( view.getContext() , bookandpublisherdetails.class );
                 i.putExtra("id" , courseModel.getUserid());
                 view.getContext().startActivity(i);

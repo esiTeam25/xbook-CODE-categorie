@@ -6,6 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".bookandpublisherdetails">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/profileImageId"
+        android:src="@color/white"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:id="@+id/profileNameid"
+
+        />
     <com.ortiz.touchview.TouchImageView
         android:padding="20dp"
         android:id="@+id/bookImageId"

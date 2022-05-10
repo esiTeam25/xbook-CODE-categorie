@@ -30,6 +30,7 @@ import android.graphics.RectF;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -59,7 +60,7 @@ public class mapactivity extends AppCompatActivity implements OnMapReadyCallback
     GoogleMap map;
     static LatLng  point = new LatLng(0,0)   ;
     static String name = "" ;
-    static Bitmap image ;
+    static String image ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,9 +111,11 @@ public class mapactivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
+        byte[] decodedString2 = Base64.decode(image, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
 
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), image);
-        final float roundPx = (float) image.getWidth() * 0.06f;
+        final float roundPx = (float) decodedByte.getWidth() * 0.06f;
         roundedBitmapDrawable.setCornerRadius(roundPx);
 
 
@@ -121,8 +124,7 @@ public class mapactivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
-
-        map.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.fromBitmap(getResizedBitmap(getRoundedCornerBitmap(image , 50) , 100 , 160))));
+        map.addMarker(new MarkerOptions().position(point).title(name).icon(BitmapDescriptorFactory.fromBitmap(getResizedBitmap(getRoundedCornerBitmap(decodedByte, 50) , 100 , 160))));
 
 
 
