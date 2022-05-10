@@ -16,14 +16,18 @@ android:orientation="vertical"
         android:iconifiedByDefault="false"
         android:layout_alignParentTop="true"
 
+
         />
     <GridView
         android:gravity="center"
-android:layout_gravity="center"
+        android:layout_gravity="center"
         android:id="@+id/gridid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="true"
+        tools:listitem="@layout/onegrid"
+        android:focusableInTouchMode="true"
         android:numColumns="3"
         android:verticalSpacing="6dp" />
 

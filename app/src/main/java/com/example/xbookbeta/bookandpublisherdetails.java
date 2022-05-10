@@ -41,6 +41,7 @@ static  String bookimage ;//= null ;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookandpublisherdetails);
+
         bookImage = findViewById(R.id.bookImageId);
         profileprofile = findViewById(R.id.profileImageId);
         namee = findViewById(R.id.profileNameid);

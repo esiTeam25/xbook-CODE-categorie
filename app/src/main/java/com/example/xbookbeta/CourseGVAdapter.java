@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -18,7 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
-public class CourseGVAdapter extends ArrayAdapter<onebook> {
+public class CourseGVAdapter extends ArrayAdapter<onebook> implements View.OnClickListener {
     public CourseGVAdapter(@NonNull Context context, ArrayList<onebook> courseModelArrayList) {
         super(context, 0, courseModelArrayList);
     }
@@ -39,22 +44,20 @@ public class CourseGVAdapter extends ArrayAdapter<onebook> {
         byte[] decodedString2 = Base64.decode(courseModel.getBookimage(), Base64.DEFAULT);
         Bitmap decodedByte2 = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
         courseIV.setImageBitmap(decodedByte2);
-        courseIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //mapactivity.point = new LatLng( courseModel.getLatitude() , courseModel.getLongitude());
-              // mapactivity.name = courseModel.getTitle() ;
 
+      courseIV.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              bookandpublisherdetails.key = courseModel.getUserid()  ;
+              getContext().startActivity(new Intent(getContext() , bookandpublisherdetails.class));
+          }
+      });
 
-               // bookandpublisherdetails.bookimage = courseModel.getBookimage() ;
-                //mapactivity.image =  courseModel.getBookimage() ;
-              //  Intent i = ;
-                //i.putExtra("id" , courseModel.getUserid());
-                bookandpublisherdetails.key = courseModel.getUserid();
-                view.getContext().startActivity(new Intent( view.getContext() , bookandpublisherdetails.class ));
-
-            }
-        });
         return listitemView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        getContext().startActivity(new Intent(getContext(), bookandpublisherdetails.class));
     }
 }

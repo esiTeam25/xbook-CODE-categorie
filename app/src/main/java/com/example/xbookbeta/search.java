@@ -32,6 +32,7 @@ public class search extends AppCompatActivity {
     SearchView searchView;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class search extends AppCompatActivity {
 
 
 
-        CourseGVAdapter gridadptr = new CourseGVAdapter(search.this,books );
+        MyBaseAdapter gridadptr = new MyBaseAdapter(this,books);
 
 
         key=null ;
@@ -48,7 +49,7 @@ public class search extends AppCompatActivity {
         gridView = findViewById(R.id.gridid);
         gridView.setAdapter(gridadptr);
         searchView=findViewById(R.id.searchView);
-        addelements(gridadptr);
+        gridadptr.notifyDataSetChanged();
         AbsListView.OnScrollListener listen = new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -62,7 +63,7 @@ public class search extends AppCompatActivity {
                     if (!isloading){
 
                         isloading=true ;
-                        addelements(gridadptr);
+                        gridadptr.notifyDataSetChanged();
 
 
 
@@ -70,6 +71,7 @@ public class search extends AppCompatActivity {
             }
         } ;
  gridView.setOnScrollListener(listen);
+ addelements(gridadptr);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -108,7 +110,7 @@ wait.dismiss();
 
     }
 
-    public void addelements(CourseGVAdapter rva){
+    public void addelements(MyBaseAdapter rva){
 
         get().addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
