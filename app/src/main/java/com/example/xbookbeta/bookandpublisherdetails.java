@@ -28,13 +28,13 @@ import com.ortiz.touchview.TouchImageView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class bookandpublisherdetails extends AppCompatActivity {
-static  String bookimage = null ;
+static  String bookimage ;//= null ;
     TouchImageView bookImage;
     String id ;
     static  String profileimage ;
     CircleImageView profileprofile ;
-    public static String key ;
-    public static String name;
+    public static String key ;//=null ;
+    public static String name;// = null;
     TextView namee ;
 
     @Override
@@ -44,7 +44,7 @@ static  String bookimage = null ;
         bookImage = findViewById(R.id.bookImageId);
         profileprofile = findViewById(R.id.profileImageId);
         namee = findViewById(R.id.profileNameid);
-        if (bookimage!=null) {
+        if (bookimage!=null && name != null) {
             namee.setText(name);
             byte[] decodedString2 = Base64.decode(bookimage, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);

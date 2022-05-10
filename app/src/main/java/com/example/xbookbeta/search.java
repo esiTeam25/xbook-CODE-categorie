@@ -88,7 +88,7 @@ public class search extends AppCompatActivity {
                         for(DocumentSnapshot dc : task.getResult()){
                             books.add(
                                     new
-                                            onebook(dc.getString("id") , dc.getString("image") ,dc.getString("title") , dc.getString("categorie") , dc.getDouble("lat")  , dc.getDouble("lng"))) ;
+                                            onebook(dc.getId() , dc.getString("image") ,dc.getString("title") , dc.getString("categorie") , dc.getDouble("lat")  , dc.getDouble("lng") )) ;
                         }
                         gridadptr.notifyDataSetChanged();
 wait.dismiss();
@@ -118,7 +118,7 @@ wait.dismiss();
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         books.add(
                                 new
-                                        onebook(dc.getDocument().getString("id") , dc.getDocument().getString("image") ,dc.getDocument().getString("title") , dc.getDocument().getString("categorie") , dc.getDocument().getDouble("lat")  , dc.getDocument().getDouble("lng"))) ;
+                                        onebook(dc.getDocument().getId() , dc.getDocument().getString("image") ,dc.getDocument().getString("title") , dc.getDocument().getString("categorie") , dc.getDocument().getDouble("lat")  , dc.getDocument().getDouble("lng"))) ;
                         key =  dc.getDocument();
                     }
 

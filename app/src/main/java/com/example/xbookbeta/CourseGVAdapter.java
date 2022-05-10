@@ -42,15 +42,17 @@ public class CourseGVAdapter extends ArrayAdapter<onebook> {
         courseIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mapactivity.point = new LatLng( courseModel.getLatitude() , courseModel.getLongitude());
-                mapactivity.name = courseModel.getTitle() ;
+                //mapactivity.point = new LatLng( courseModel.getLatitude() , courseModel.getLongitude());
+              // mapactivity.name = courseModel.getTitle() ;
 
 
-                bookandpublisherdetails.bookimage = courseModel.getBookimage() ;
-                mapactivity.image =  courseModel.getBookimage() ;
-                Intent i = new Intent( view.getContext() , bookandpublisherdetails.class );
-                i.putExtra("id" , courseModel.getUserid());
-                view.getContext().startActivity(i);
+               // bookandpublisherdetails.bookimage = courseModel.getBookimage() ;
+                //mapactivity.image =  courseModel.getBookimage() ;
+              //  Intent i = ;
+                //i.putExtra("id" , courseModel.getUserid());
+                bookandpublisherdetails.key = courseModel.getUserid();
+                view.getContext().startActivity(new Intent( view.getContext() , bookandpublisherdetails.class ));
+
             }
         });
         return listitemView;

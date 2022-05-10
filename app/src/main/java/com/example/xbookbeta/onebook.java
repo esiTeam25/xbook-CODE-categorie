@@ -40,6 +40,7 @@ this.latitude = latitude;
         this.longitude = longitude ;
     }
 
+
     public Double getLatitude() {
         return latitude;
     }
