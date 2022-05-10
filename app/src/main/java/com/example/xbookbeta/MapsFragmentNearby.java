@@ -84,11 +84,11 @@ public class MapsFragmentNearby extends Fragment {
                             */
                             }
 
-                            byte[] decodedString2 = Base64.decode(dc.getDocument().getString("image"), Base64.DEFAULT);
+                            byte[] decodedString2 = Base64.decode(dc.getDocument().getString("lowimage"), Base64.DEFAULT);
                             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
                             googleMap.addMarker(new MarkerOptions()
                                     .position(new LatLng(dc.getDocument().getDouble("lat"), dc.getDocument().getDouble("lng")))
-                                    .title(dc.getDocument().getString("title")).icon(BitmapDescriptorFactory.fromBitmap(getResizedBitmap(getRoundedCornerBitmap(decodedByte , 50) , 100 , 160))))
+                                    .title(dc.getDocument().getString("title")).icon(BitmapDescriptorFactory.fromBitmap(getResizedBitmap(getRoundedCornerBitmap(decodedByte , 10) , 100 , 160))))
                             .setTag(i++);
 
 

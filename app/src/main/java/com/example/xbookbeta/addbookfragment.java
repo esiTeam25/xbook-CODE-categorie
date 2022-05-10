@@ -73,6 +73,8 @@ String state[] = {"select state" , "Fair" ,  "Good"  , "new"};
 ArrayAdapter <String> adapter , adapter2 ;
 EditText title , description  ;
 String imageStringToUpload = null  ;
+String lowimageStringToUpload = null  ;
+
 String prflname , prflimage ;
 Boolean gonetosettings = false ;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -158,6 +160,7 @@ if(FirstActivity.locationToUpload==null){
                 dataaa.put("categorie", categorieSpinner.getSelectedItem().toString());
                 dataaa.put("state", stateSpinner.getSelectedItem().toString());
                 dataaa.put("image", imageStringToUpload);
+                dataaa.put("lowimage", lowimageStringToUpload);
                 dataaa.put("lat", FirstActivity.locationToUpload.latitude);
                 dataaa.put("lng", FirstActivity.locationToUpload.longitude);
 
@@ -199,9 +202,10 @@ if(FirstActivity.locationToUpload==null){
 
 
                 try {
-                    Bitmap bitmap = getResizedBitmap(MediaStore.Images.Media.getBitmap( getContext().getContentResolver(), resultUri ), 700);
+                    Bitmap bitmap = getResizedBitmap(MediaStore.Images.Media.getBitmap( getContext().getContentResolver(), resultUri ), 600);
 
                   imageStringToUpload = convertBitmapToString(bitmap) ;
+                  lowimageStringToUpload = convertBitmapToString(getResizedBitmap(MediaStore.Images.Media.getBitmap( getContext().getContentResolver(), resultUri ), 100));
                     bookImage.setImageBitmap(bitmap);
 
                 } catch (IOException e) {

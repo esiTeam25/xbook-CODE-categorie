@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.ortiz.touchview.TouchImageView;
@@ -14,6 +15,7 @@ import com.ortiz.touchview.TouchImageView;
 public class bookandpublisherdetails extends AppCompatActivity {
 static  Bitmap bookimage = null ;
     TouchImageView bookImage;
+    public static String key ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +28,16 @@ static  Bitmap bookimage = null ;
             findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
             findViewById(R.id.phonecallid).setVisibility(View.INVISIBLE);
         }
+        Toast.makeText(this, key, Toast.LENGTH_SHORT).show();
+
+
 
             findViewById(R.id.sendmessageid).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(view.getContext(), chat.class);
                     i.putExtra("id", getIntent().getExtras().getString("id"));
-
+                    i.putExtra("key" , key) ;
                     i.putExtra("x", "2");
                     startActivity(i);
                 }

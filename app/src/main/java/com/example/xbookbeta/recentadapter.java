@@ -10,13 +10,16 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,7 +61,7 @@ public class recentadapter extends RecyclerView.Adapter<recentadapter.userholder
             }
         }) ;*/
         FirebaseDatabase.getInstance().getReference().child("recent").child("plus").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(u.getId()).child("state").addListenerForSingleValueEvent(new ValueEventListener() {
+                .child(u.getKey()+u.getId()).child("state").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.getValue().toString().equals("s")){
@@ -76,7 +79,7 @@ public class recentadapter extends RecyclerView.Adapter<recentadapter.userholder
 
 
         holder.name.setText(u.getName());
-        FirebaseDatabase.getInstance().getReference("users").child(u.getId()).addValueEventListener(new ValueEventListener() {
+       /* FirebaseDatabase.getInstance().getReference("users").child(u.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 imagestr= "";
@@ -92,16 +95,27 @@ public class recentadapter extends RecyclerView.Adapter<recentadapter.userholder
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
         holder.msg.setText(u.getMsg());
 
-
+        FirebaseFirestore.getInstance().collection("books").document(u.getKey()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                imagestr = task.getResult().getString("lowimage");
+                if(!imagestr.equals("")) {
+                    byte[] decodedString = Base64.decode(imagestr, Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    holder.prflimg.setImageBitmap(decodedByte);
+                }
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent( view.getContext() , chat.class );
                 i.putExtra("id" , u.getId());
+                i.putExtra("key" , u.getKey());
                 i.putExtra("x" , "1");
                 view.getContext().startActivity(i);
 
@@ -118,7 +132,7 @@ public class recentadapter extends RecyclerView.Adapter<recentadapter.userholder
 
     class  userholder extends RecyclerView.ViewHolder {
         TextView name , msg ;
-        CircleImageView prflimg;
+        ImageView prflimg;
         public userholder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.nameid);

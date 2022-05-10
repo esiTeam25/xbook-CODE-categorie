@@ -120,7 +120,7 @@ chat extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(!snapshot.hasChild(getIntent().getExtras().getString("id"))) {
+                        if(!snapshot.hasChild( getIntent().getExtras().getString("key")+getIntent().getExtras().getString("id") )) {
                             prgrsbr.setVisibility(View.INVISIBLE);
                         }
                         }
@@ -131,7 +131,7 @@ chat extends AppCompatActivity {
                     }
                 });
         FirebaseDatabase.getInstance().getReference().child("chat").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
-                .child(getIntent().getExtras().getString("id")).orderByChild("realtime")
+                .child(getIntent().getExtras().getString("key")+getIntent().getExtras().getString("id")).orderByChild("realtime")
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -175,49 +175,25 @@ chat extends AppCompatActivity {
         if(getIntent().getExtras().getString("x").equals("1")) {
 
 
-          /*  FirebaseFirestore.getInstance().collection("recent").document("plus")
-                    .collection(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
-                    .document(getIntent().getExtras().getString("id"))
-                    .update("state" , "s"  ) ;*/
-
 
             FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .child(getIntent().getExtras().getString("id")).child("state").setValue("s");
+                    .child(getIntent().getExtras().getString("key")+getIntent().getExtras().getString("id")).child("state").setValue("s");
 
 
         }
         else {
 
 
-           /* FirebaseFirestore.getInstance().collection("recent").document("plus")
-                    .collection(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
-                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-
-                        if (document.getId().toString().equals(getIntent().getExtras().getString("id"))) {
-                            FirebaseFirestore.getInstance().collection("recent").document("plus")
-                                    .collection(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
-                                    .document(getIntent().getExtras().getString("id"))
-                                    .update("state", "s");
-                        }
-
-                    }
-
-                }} );
-*/
             FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
-                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    .child(getIntent().getExtras().getString("id")+FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.hasChild(getIntent().getExtras().getString("id"))){
                         FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .child(getIntent().getExtras().getString("id")).child("state").setValue("s");
+                                .child(getIntent().getExtras().getString("key")+getIntent().getExtras().getString("id")).child("state").setValue("s");
                     }
                 }
 
@@ -325,14 +301,14 @@ chat extends AppCompatActivity {
                    /* FirebaseFirestore.getInstance().collection("chat").document(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
                             .collection(getIntent().getExtras().getString("id")).add(message);*/
                     FirebaseDatabase.getInstance().getReference().child("chat").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
-                            .child(getIntent().getExtras().getString("id")).push().setValue(message);
+                            .child(getIntent().getExtras().getString("key")+getIntent().getExtras().getString("id")).push().setValue(message);
 
 
                    /* FirebaseFirestore.getInstance().collection("chat").document(getIntent().getExtras().getString("id"))
                             .collection(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).add(message);*/
 
                     FirebaseDatabase.getInstance().getReference().child("chat").child(getIntent().getExtras().getString("id"))
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push().setValue(message);
+                            .child(getIntent().getExtras().getString("key")+FirebaseAuth.getInstance().getCurrentUser().getUid()).push().setValue(message);
 
 
 
@@ -365,6 +341,7 @@ chat extends AppCompatActivity {
                                 mp.put("name" ,name.getText().toString());
                                 mp.put("msg", text );
                                 mp.put("state" , "s");
+                                mp.put("key" ,getIntent().getExtras().getString("key"));
                                 mp.put("id",getIntent().getExtras().getString("id") );
                                 mp.put("time", ServerValue.TIMESTAMP  );
                                 //  mp.put("image" , imgstr);
@@ -373,7 +350,7 @@ chat extends AppCompatActivity {
                                         .document(getIntent().getExtras().getString("id")).set(mp);*/
                                 FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .child(getIntent().getExtras().getString("id")).setValue(mp);
+                                        .child(getIntent().getExtras().getString("key")+getIntent().getExtras().getString("id")).setValue(mp);
 
 
 
@@ -383,7 +360,8 @@ chat extends AppCompatActivity {
                                 mp2.put("name" ,namestr);
                                 mp2.put("msg",text);
                                 mp2.put("state" , "n");
-                                mp.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid().toString() );
+                    mp2.put("key" ,getIntent().getExtras().getString("key"));
+                    mp2.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid().toString() );
                                 mp2.put("time",ServerValue.TIMESTAMP );
                                 //  mp2.put("image" , imgstrr);
                                /* FirebaseFirestore.getInstance().collection("recent").document("plus")
@@ -391,7 +369,7 @@ chat extends AppCompatActivity {
                                         .document(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).set(mp2);*/
                     FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
                             .child(getIntent().getExtras().getString("id"))
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(mp2);
+                            .child(getIntent().getExtras().getString("key")+FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(mp2);
 
                          /*   }
 
@@ -683,14 +661,14 @@ prgrsbr.setVisibility(View.INVISIBLE);
                    /* FirebaseFirestore.getInstance().collection("chat").document(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
                             .collection(getIntent().getExtras().getString("id")).add(message);*/
                     FirebaseDatabase.getInstance().getReference().child("chat").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
-                            .child(getIntent().getExtras().getString("id")).push().setValue(message);
+                            .child(getIntent().getExtras().getString("key")+getIntent().getExtras().getString("id")).push().setValue(message);
 
 
                    /* FirebaseFirestore.getInstance().collection("chat").document(getIntent().getExtras().getString("id"))
                             .collection(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).add(message);*/
 
                     FirebaseDatabase.getInstance().getReference().child("chat").child(getIntent().getExtras().getString("id"))
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push().setValue(message);
+                            .child(getIntent().getExtras().getString("key")+FirebaseAuth.getInstance().getCurrentUser().getUid()).push().setValue(message);
 
 
 
@@ -724,6 +702,8 @@ prgrsbr.setVisibility(View.INVISIBLE);
                     mp.put("msg", "you sent a photo" );
                     mp.put("state" , "s");
                     mp.put("id",getIntent().getExtras().getString("id") );
+                    mp.put("key" ,getIntent().getExtras().getString("key"));
+
                     mp.put("time", ServerValue.TIMESTAMP  );
                     //  mp.put("image" , imgstr);
                                /* FirebaseFirestore.getInstance().collection("recent").document("plus")
@@ -731,7 +711,7 @@ prgrsbr.setVisibility(View.INVISIBLE);
                                         .document(getIntent().getExtras().getString("id")).set(mp);*/
                     FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .child(getIntent().getExtras().getString("id")).setValue(mp);
+                            .child(getIntent().getExtras().getString("key")+getIntent().getExtras().getString("id")).setValue(mp);
 
 
 
@@ -742,6 +722,8 @@ prgrsbr.setVisibility(View.INVISIBLE);
                     mp2.put("msg", "photo was sent by "+ namestr);
                     mp2.put("state" , "n");
                     mp.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid().toString() );
+                    mp.put("key" ,getIntent().getExtras().getString("key"));
+
                     mp2.put("time",ServerValue.TIMESTAMP );
                     //  mp2.put("image" , imgstrr);
                                /* FirebaseFirestore.getInstance().collection("recent").document("plus")
@@ -749,7 +731,7 @@ prgrsbr.setVisibility(View.INVISIBLE);
                                         .document(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).set(mp2);*/
                     FirebaseDatabase.getInstance().getReference().child("recent").child("plus")
                             .child(getIntent().getExtras().getString("id"))
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(mp2);
+                            .child(getIntent().getExtras().getString("key")+FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(mp2);
 
                          /*   }
 
@@ -815,7 +797,6 @@ prgrsbr.setVisibility(View.INVISIBLE);
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
-
 
 
 

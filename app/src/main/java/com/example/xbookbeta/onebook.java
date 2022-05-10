@@ -1,10 +1,16 @@
 package com.example.xbookbeta;
 
 public class onebook {
-    String userid , bookimage , title , categorie , distance ;
+    String userid , bookimage , title , categorie , distance  , key ;
     Double latitude , longitude ;
 
+    public String getKey() {
+        return key;
+    }
 
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public onebook(String userid , String bookimage, String title, String categorie, Double latitude , Double longitude ) {
     this.userid = userid;
@@ -13,6 +19,16 @@ public class onebook {
         this.categorie = categorie;
 this.latitude = latitude;
     this.longitude = longitude ;
+
+    }
+    public onebook(String userid , String bookimage, String title, String categorie, Double latitude , Double longitude , String key) {
+        this.userid = userid;
+        this.bookimage = bookimage;
+        this.title = title;
+        this.categorie = categorie;
+        this.latitude = latitude;
+        this.longitude = longitude ;
+        this.key = key ;
 
     }
     public onebook( String bookimage, String title, String categorie, Double latitude , Double longitude) {

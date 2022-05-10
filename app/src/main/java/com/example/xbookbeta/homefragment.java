@@ -593,7 +593,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         books.add(
                                 new
-                                        onebook(dc.getDocument().getString("id") , dc.getDocument().getString("image") ,dc.getDocument().getString("title") , dc.getDocument().getString("categorie") , dc.getDocument().getDouble("lat")  , dc.getDocument().getDouble("lng"))) ;
+                                        onebook(dc.getDocument().getString("id") , dc.getDocument().getString("image") ,dc.getDocument().getString("title") , dc.getDocument().getString("categorie") , dc.getDocument().getDouble("lat")  , dc.getDocument().getDouble("lng") ,dc.getDocument().getId())) ;
                         key =  dc.getDocument();
                     }
 

@@ -26,13 +26,12 @@
             android:textSize="17dp" />
 
         <ImageView
+            android:id="@+id/bookImageId"
             android:layout_width="100dp"
             android:layout_height="160dp"
-            android:src="#00FF00"
             android:layout_below="@+id/profileImageId"
             android:layout_marginTop="10dp"
-            android:id="@+id/bookImageId"
-  />
+            android:src="#00FF00" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

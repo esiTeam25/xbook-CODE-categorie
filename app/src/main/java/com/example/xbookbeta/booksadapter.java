@@ -127,7 +127,8 @@ if(FirstActivity.locationToUpload!=null) {
                     byte[] decodedString2 = Base64.decode(u.getBookimage(), Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
                    bookandpublisherdetails.bookimage = decodedByte ;
-mapactivity.image = decodedByte ;
+                   bookandpublisherdetails.key = u.getKey();
+                mapactivity.image = decodedByte ;
                 Intent i = new Intent( view.getContext() , bookandpublisherdetails.class );
                 i.putExtra("id" , u.getUserid());
                 view.getContext().startActivity(i);

@@ -60,6 +60,7 @@ public class chatfragment extends Fragment {
         rv.setLayoutManager( new LinearLayoutManager(getContext()));
         adptr = new recentadapter(rvlst);
         rv.setAdapter(adptr);
+        getRecentUpdates();
 
 
 
@@ -93,10 +94,10 @@ public class chatfragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getRecentUpdates();
+        //getRecentUpdates();
     }
 
-
+/*
     private final EventListener<QuerySnapshot> eventListener  =(value, error) -> {
        rv.removeAllViewsInLayout();
         rvlst.clear();
@@ -131,7 +132,7 @@ public class chatfragment extends Fragment {
 
 
     };
-
+*/
 
     public void getRecentUpdates() {
        /* FirebaseFirestore.getInstance().collection("recent").document("plus")
@@ -170,7 +171,9 @@ public class chatfragment extends Fragment {
                             new recentuser(
                                  ds.child("name").getValue().toString(),
                                     ""
-                                    ,ds.getKey().toString()
+                                    ,ds.child("id").getValue().toString()
+                                    ,ds.child("key").getValue().toString()
+
                                     ,ds.child("msg").getValue().toString()
                                     ,ds.child("time").getValue()
 
