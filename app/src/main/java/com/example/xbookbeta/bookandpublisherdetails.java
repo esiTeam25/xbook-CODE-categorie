@@ -3,6 +3,7 @@ package com.example.xbookbeta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -41,10 +42,14 @@ static  String bookimage ;//= null ;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookandpublisherdetails);
-
+        ProgressDialog wait = new ProgressDialog(bookandpublisherdetails.this);
+        wait.setTitle("wait");
+        wait.setMessage("wait");
+        wait.show();
         bookImage = findViewById(R.id.bookImageId);
         profileprofile = findViewById(R.id.profileImageId);
         namee = findViewById(R.id.profileNameid);
+
         if (bookimage!=null && name != null) {
 
 
@@ -64,7 +69,7 @@ static  String bookimage ;//= null ;
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         profileprofile.setImageBitmap(decodedByte);
                         //   holder.profilename.setText(snapshot.child("name").getValue().toString());
-
+wait.dismiss();
                     }
                 }
 
@@ -214,6 +219,7 @@ static  String bookimage ;//= null ;
                                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                                 profileprofile.setImageBitmap(decodedByte);
                              //   holder.profilename.setText(snapshot.child("name").getValue().toString());
+                                wait.dismiss();
 
                             }
                         }

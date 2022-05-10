@@ -170,7 +170,26 @@ if(FirstActivity.locationToUpload==null){
                             public void onSuccess(DocumentReference documentReference) {
                                 geoFire.setLocation(documentReference.getId(), FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
 
-                                wait.dismiss();
+
+                                DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                                account.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        long number = (long) snapshot.child("books").getValue() ;
+                                        snapshot.getRef().child("books").setValue(number+1);
+                                        wait.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
+
+
 
                             }
                         });
