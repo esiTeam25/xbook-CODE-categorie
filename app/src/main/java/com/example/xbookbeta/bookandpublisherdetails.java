@@ -46,15 +46,71 @@ static  String bookimage ;//= null ;
         profileprofile = findViewById(R.id.profileImageId);
         namee = findViewById(R.id.profileNameid);
         if (bookimage!=null && name != null) {
-            namee.setText(name);
+
+
+
+
+
+
+            DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
+                    .child(getIntent().getExtras().getString("id"));
+            account.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    namee.setText(snapshot.child("name").getValue().toString());
+                    String profileimagefor = snapshot.child("image").getValue().toString();
+                    if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
+                        byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        profileprofile.setImageBitmap(decodedByte);
+                        //   holder.profilename.setText(snapshot.child("name").getValue().toString());
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if (getIntent().getExtras().getString("id").equals(FirebaseAuth.getInstance().getUid().toString())) {
+                findViewById(R.id.sendmessageid).setVisibility(View.INVISIBLE);
+                findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
+                findViewById(R.id.phonecallid).setVisibility(View.INVISIBLE);
+            }
             byte[] decodedString2 = Base64.decode(bookimage, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
             bookImage.setImageBitmap(decodedByte) ;
-            if(profileimage.length()>10) {
-                decodedString2 = Base64.decode(profileimage, Base64.DEFAULT);
-                decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
-                profileprofile.setImageBitmap(decodedByte);
-            }
+
             findViewById(R.id.sendmessageid).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -87,7 +143,48 @@ static  String bookimage ;//= null ;
                 }
             });
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         else {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
 
             FirebaseFirestore.getInstance().collection("books").document(key).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -149,6 +246,48 @@ static  String bookimage ;//= null ;
                     startActivity(intent);
                 }
             });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
 
@@ -157,4 +296,15 @@ static  String bookimage ;//= null ;
 
         }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bookimage=null ;
+    name = null;
+        id =null;
+        profileimage=null ;
+        profileprofile=null ;
+        key =null;
+
+    }
 }

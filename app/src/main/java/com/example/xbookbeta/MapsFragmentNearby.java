@@ -77,32 +77,27 @@ public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerC
 
                         for (DocumentChange dc : value.getDocumentChanges()){
                             if(dc.getType() == DocumentChange.Type.ADDED){
+                                byte[] decodedString2 = Base64.decode(dc.getDocument().getString("lowimage"), Base64.DEFAULT);
+                                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
+                                googleMap.addMarker(new MarkerOptions()
+                                        .position(new LatLng(dc.getDocument().getDouble("lat"), dc.getDocument().getDouble("lng")))
+                                        .title(dc.getDocument().getString("title")).icon(BitmapDescriptorFactory.fromBitmap(getResizedBitmap(getRoundedCornerBitmap(decodedByte , 10) , 100 , 160)))).setTag(dc.getDocument().getId());
+                                ;
+                                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                    @Override
+                                    public boolean onMarkerClick(Marker marker) {
+                                        Intent i = new Intent( getContext() , bookandpublisherdetails.class );
+                                        bookandpublisherdetails.key=marker.getTag().toString();
+                                        getContext().startActivity(i);
+                                        return false;
+                                    }
+                                });
 
-                            /*    books.add(
 
-                                        new
-                                                onebook(dc.getDocument().getString("id") , dc.getDocument().getString("image") ,dc.getDocument().getString("title") , dc.getDocument().getString("categorie") , dc.getDocument().getDouble("lat")  , dc.getDocument().getDouble("lng"))) ;
-                            */
+
                             }
 
-                            byte[] decodedString2 = Base64.decode(dc.getDocument().getString("lowimage"), Base64.DEFAULT);
-                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
-                            googleMap.addMarker(new MarkerOptions()
-                                    .position(new LatLng(dc.getDocument().getDouble("lat"), dc.getDocument().getDouble("lng")))
-                                    .title(dc.getDocument().getString("title")).icon(BitmapDescriptorFactory.fromBitmap(getResizedBitmap(getRoundedCornerBitmap(decodedByte , 10) , 100 , 160))))
-                            ;
 
-
-
-                            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                                @Override
-                                public boolean onMarkerClick(Marker marker) {
-                                    Intent i = new Intent( getContext() , bookandpublisherdetails.class );
-bookandpublisherdetails.key=dc.getDocument().getId();
-getContext().startActivity(i);
-                                    Toast.makeText(getContext(), "aoihg", Toast.LENGTH_SHORT).show();                                    return false;
-                                }
-                            });
 
 
                         }
