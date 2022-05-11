@@ -37,16 +37,24 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnTokenCanceledListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class FirstActivity extends AppCompatActivity {
     boolean mLocationPermissionGranted = false;
     static LatLng locationToUpload = null;
     FusedLocationProviderClient fusedLocationClient;
     ProgressBar prgrsbr ;
+    public static ArrayList<String> savedBooks = new ArrayList<>() ;
 
 
 
@@ -307,8 +315,17 @@ prgrsbr.setVisibility(View.VISIBLE);
 
 void startapp(){
     if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-        startActivity(new Intent(FirstActivity.this, MainActivity.class));
-        finish();
+        FirebaseFirestore.getInstance().collection(FirebaseAuth.getInstance().getUid().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(DocumentSnapshot ds :task.getResult().getDocuments()){
+                    savedBooks.add(ds.getString("key")) ;
+                }
+                startActivity(new Intent(FirstActivity.this, MainActivity.class));
+                finish();
+            }
+        });
+
     } else {
         startActivity(new Intent(FirstActivity.this, LoginActivity.class));
         finish();

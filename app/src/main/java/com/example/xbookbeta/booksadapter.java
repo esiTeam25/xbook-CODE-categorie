@@ -7,6 +7,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,25 +16,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class booksadapter extends RecyclerView.Adapter<booksadapter.bookholder> {
     private ArrayList<onebook> bookslist ;
     String profileimagefor;
+
 
     public booksadapter(ArrayList<onebook> bookslist) {
         this.bookslist = bookslist;
@@ -50,28 +56,6 @@ public class booksadapter extends RecyclerView.Adapter<booksadapter.bookholder> 
     @Override
     public void onBindViewHolder(@NonNull bookholder holder, int position) {
         onebook u = bookslist.get(position);
-
-       /* FirebaseFirestore.getInstance().collection("users")
-                .document(u.getUserid())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.get("name") != null){
-               holder.profilename.setText(documentSnapshot.getString("name")); }
-                if ( !documentSnapshot.get("image").equals("" ) ) {
-                    byte[] decodedString = Base64.decode(documentSnapshot.getString("image"), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    holder.profileimage.setImageBitmap(decodedByte);
-                }
-
-            }
-        });*/
-
-
-
-
-
-
 
         DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(u.getUserid());
@@ -108,17 +92,24 @@ if(u.getBookimage() != null) {
 if(FirstActivity.locationToUpload!=null) {
     holder.distance.setText(String.format("%.2f", SphericalUtil.computeDistanceBetween(new LatLng(u.getLatitude(), u.getLongitude()), FirstActivity.locationToUpload) / 1000) + "km");
 }
-        /*
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+if(FirstActivity.savedBooks.contains(u.getKey())) holder.save.setVisibility(View.INVISIBLE);
+        holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent( view.getContext() , chat.class );
-                i.putExtra("id" , u.getId());
-                i.putExtra("x" , "2");
-                view.getContext().startActivity(i);
-            }
-        });*/
+                HashMap<String, Object> dataaa = new HashMap<>();
+                dataaa.put("key" , u.getKey());
+                FirebaseFirestore.getInstance().collection(FirebaseAuth.getInstance().getUid()).add(dataaa).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        Toast.makeText(view.getContext(), "saved", Toast.LENGTH_SHORT).show();
+                        holder.save.setText("saved");
+                        holder.save.setClickable(false);
+                        FirstActivity.savedBooks.add(u.getKey());
+                    }
+                });
 
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,6 +147,7 @@ if(FirstActivity.locationToUpload!=null) {
         TextView profilename , title , categorie , distance  ;
         CircleImageView profileimage ;
         ImageView bookimage ;
+        Button save  ;
 
         public bookholder(@NonNull View itemView) {
             super(itemView);
@@ -165,6 +157,7 @@ if(FirstActivity.locationToUpload!=null) {
             distance = itemView.findViewById(R.id.distanceid);
             profileimage = itemView.findViewById(R.id.profileImageId);
             bookimage = itemView.findViewById(R.id.bookImageId);
+            save = itemView.findViewById(R.id.saveid) ;
         }
     }
 }

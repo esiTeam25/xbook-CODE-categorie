@@ -66,6 +66,13 @@
             android:id="@+id/distanceid"
 
             />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="save"
+            android:layout_toEndOf="@id/distanceid"
+            android:id="@+id/saveid"
+            />
 
 
     </RelativeLayout>

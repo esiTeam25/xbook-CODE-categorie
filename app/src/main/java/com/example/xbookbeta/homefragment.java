@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -74,7 +75,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
                 startActivity(new Intent(v.getContext() , search.class));}
 
         });
-
+        Toast.makeText(getContext(), FirstActivity.savedBooks.size()+"", Toast.LENGTH_SHORT).show();
 
 
 

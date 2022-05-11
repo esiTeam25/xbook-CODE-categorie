@@ -11,10 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity {
     TextView email ;
@@ -44,9 +49,19 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                wait.dismiss();
-                                startActivity(new Intent(LoginActivity.this , MainActivity.class));
-                                finish();
+                                FirebaseFirestore.getInstance().collection(FirebaseAuth.getInstance().getUid().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        for(DocumentSnapshot ds :task.getResult().getDocuments()){
+                                            FirstActivity.savedBooks.add(ds.getString("key")) ;
+                                        }
+                                        wait.dismiss();
+                                        startActivity(new Intent(LoginActivity.this , MainActivity.class));
+                                        finish();
+                                    }
+                                });
+
+
                             }
 
                         }).addOnFailureListener(new OnFailureListener() {
