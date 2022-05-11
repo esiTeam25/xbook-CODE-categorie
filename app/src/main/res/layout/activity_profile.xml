@@ -28,6 +28,30 @@
         android:textSize="30dp"
         />
 
+    <TextView
+        android:id="@+id/likesid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileNameId"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="17dp"
+        android:text="likes"
+        android:textColor="@color/black"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/booksid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileNameId"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="19dp"
+        android:layout_marginRight="87dp"
+        android:text="books"
+        android:textColor="@color/black"
+        android:textSize="30dp" />
+
     <ProgressBar
         android:id="@+id/prgrsbrid"
         android:layout_width="wrap_content"

@@ -51,7 +51,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class profileActivity extends AppCompatActivity {
     private CircleImageView prflimg;
-    private TextView prflname;
+    private TextView prflname , likes  , bookss;
     RecyclerView rv ;
     Boolean end = false ;
     profilebooksadapter rva =  new profilebooksadapter(books) ;
@@ -66,7 +66,8 @@ public class profileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         prflimg = findViewById(R.id.profileImageId);
         prflname = findViewById(R.id.profileNameId);
-
+        likes = findViewById(R.id.likesid);
+        bookss = findViewById(R.id.booksid);
 
         ProgressDialog wait = new ProgressDialog(profileActivity.this);
         wait.setTitle("wait");
@@ -92,6 +93,8 @@ public class profileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 prflname.setText(snapshot.child("name").getValue().toString());
+                likes.setText("likes : "+snapshot.child("likes").getValue().toString());
+                bookss.setText("books :"+ snapshot.child("books").getValue().toString());
                 long num =(long) snapshot.child("books").getValue();
                 if (num == 0 ) findViewById(R.id.yourbooksbuttonid).setVisibility(View.INVISIBLE);
                 if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
