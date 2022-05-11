@@ -62,7 +62,7 @@ TextView password  , name;
                                         .setValue(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-
+                                        FirstActivity.savedBooks.clear();
                                         wait.dismiss();
                                         startActivity(new Intent(Signup.this , MainActivity.class));
                                         finish();

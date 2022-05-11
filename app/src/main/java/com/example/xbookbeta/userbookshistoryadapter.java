@@ -47,16 +47,7 @@ public class userbookshistoryadapter extends RecyclerView.Adapter<userbookshisto
         holder.title.setText(u.getTitle());
         holder.categorie.setText(u.getCategorie());
         holder.distance.setText(u.getDistance());
-        /*
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent( view.getContext() , chat.class );
-                i.putExtra("id" , u.getId());
-                i.putExtra("x" , "2");
-                view.getContext().startActivity(i);
-            }
-        });*/
+
     }
 
 

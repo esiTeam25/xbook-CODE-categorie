@@ -1,8 +1,11 @@
 package com.example.xbookbeta;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,18 +13,29 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
@@ -31,12 +45,20 @@ import com.vansuita.pickimage.listeners.IPickResult;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class profileActivity extends AppCompatActivity {
     private CircleImageView prflimg;
     private TextView prflname;
+    RecyclerView rv ;
+    Boolean end = false ;
+    profilebooksadapter rva =  new profilebooksadapter(books) ;
+    Boolean isloading = false ;
+    // String key = null ;
+    DocumentSnapshot key = null ;
+    public static ArrayList<onebook> books = new ArrayList<>() ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,41 +71,38 @@ public class profileActivity extends AppCompatActivity {
         ProgressDialog wait = new ProgressDialog(profileActivity.this);
         wait.setTitle("wait");
         wait.setMessage("wait");
-        //  wait.show();
+         wait.show();
 
 
-     /*   FirebaseFirestore.getInstance().collection("users")
-                .document(FirebaseAuth.getInstance().getUid().toString())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-            //    if ( !documentSnapshot.get("image").toString().equals("" ) ) {
-                    byte[] decodedString = Base64.decode(documentSnapshot.getString("image").toString(), Base64.DEFAULT);
-                    prflname.setText(documentSnapshot.get("name").toString());
-                    prflimg.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
-                    wait.dismiss();
-               /* }else{
-                    prflname.setText(documentSnapshot.get("name").toString());
-                    wait.dismiss();
-
-                }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long num =(long) snapshot.child("books").getValue();
+                if (num == 0 ) findViewById(R.id.yourbooksbuttonid).setVisibility(View.INVISIBLE);
             }
-        });*/
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users").child( FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
         account.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                prflname.setText(snapshot.child("name").getValue().toString());
+                long num =(long) snapshot.child("books").getValue();
+                if (num == 0 ) findViewById(R.id.yourbooksbuttonid).setVisibility(View.INVISIBLE);
                 if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
                     byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
                     prflname.setText(snapshot.child("name").getValue().toString());
                     prflimg.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
                     wait.dismiss();
                 }
-                else {
-                    prflname.setText(snapshot.child("name").getValue().toString());
+
                     wait.dismiss();
-                }
+
             }
 
             @Override
@@ -94,23 +113,6 @@ public class profileActivity extends AppCompatActivity {
 
 
 
-
-      /*  FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                //Toast.makeText(v.getContext(), value.getString("image"), Toast.LENGTH_SHORT).show();
-                if ( !value.get("image").toString().equals("" ) ) {
-                    byte[] decodedString = Base64.decode( value.getString("image") , Base64.DEFAULT);
-                    prflname.setText(value.get("name").toString());
-                    prflimg.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
-                    wait.dismiss();
-                }else{
-                    prflname.setText(value.get("name").toString());
-                    wait.dismiss();
-
-                }
-            }
-        }) ;*/
 
 
 
@@ -145,6 +147,56 @@ public class profileActivity extends AppCompatActivity {
                 startActivity(new Intent( profileActivity.this , userhistorybooks.class));
             }
         });
+
+
+
+
+
+
+
+
+
+        rv = findViewById(R.id.rvid);
+        rv.setAdapter(rva);
+        rv.setHasFixedSize(true);
+        LinearLayoutManager lm = new LinearLayoutManager(profileActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        rv.setLayoutManager(lm);
+        books.clear();
+
+        addelements();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -168,16 +220,7 @@ public class profileActivity extends AppCompatActivity {
                     Bitmap bitmap = getResizedBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), resultUri), 50);
                     FirebaseDatabase.getInstance().getReference().child("users")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("image").setValue(convertBitmapToString(bitmap));
-                    /*FirebaseFirestore.getInstance().collection("users")
-                            .document(FirebaseAuth.getInstance().getUid().toString())
-                            .update( "image" , convertBitmapToString(bitmap)).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
 
-                            }
-                        }
-                    });*/
                     prflimg.setImageBitmap(bitmap);
 
                 } catch (IOException e) {
@@ -238,6 +281,74 @@ public class profileActivity extends AppCompatActivity {
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
+
+
+
+
+
+
+
+
+
+    public void addelements(){
+
+
+
+
+
+        FirebaseFirestore.getInstance().collection("books").whereEqualTo("id" , FirebaseAuth.getInstance().getCurrentUser().getUid()).limit(4).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for (DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        books.add(
+                                new
+                                        onebook(  dc.getDocument().getString("image") ,dc.getDocument().getString("title") , dc.getDocument().getString("categorie") , dc.getDocument().getDouble("latitude")  , dc.getDocument().getDouble("longitude"))) ;
+                    }
+
+
+
+                }
+                findViewById(R.id.prgrsbrid).setVisibility(View.INVISIBLE);
+                rva.notifyDataSetChanged();
+                rva.notifyItemRangeInserted(books.size() , books.size());
+
+
+
+                //  rv.smoothScrollToPosition(0);
+            }
+
+        });
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

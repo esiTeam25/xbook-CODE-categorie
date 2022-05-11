@@ -221,7 +221,7 @@ if(FirstActivity.locationToUpload==null){
 
 
                 try {
-                    Bitmap bitmap = getResizedBitmap(MediaStore.Images.Media.getBitmap( getContext().getContentResolver(), resultUri ), 600);
+                    Bitmap bitmap = getResizedBitmap(MediaStore.Images.Media.getBitmap( getContext().getContentResolver(), resultUri ), 400);
 
                   imageStringToUpload = convertBitmapToString(bitmap) ;
                   lowimageStringToUpload = convertBitmapToString(getResizedBitmap(MediaStore.Images.Media.getBitmap( getContext().getContentResolver(), resultUri ), 100));

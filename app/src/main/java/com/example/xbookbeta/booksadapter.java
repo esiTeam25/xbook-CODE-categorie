@@ -96,15 +96,16 @@ if(FirstActivity.savedBooks.contains(u.getKey())) holder.save.setVisibility(View
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.save.setVisibility(View.INVISIBLE);
+
                 HashMap<String, Object> dataaa = new HashMap<>();
                 dataaa.put("key" , u.getKey());
                 FirebaseFirestore.getInstance().collection(FirebaseAuth.getInstance().getUid()).add(dataaa).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         Toast.makeText(view.getContext(), "saved", Toast.LENGTH_SHORT).show();
-                        holder.save.setText("saved");
-                        holder.save.setClickable(false);
-                        FirstActivity.savedBooks.add(u.getKey());
+
+FirstActivity.savedBooks.add(u.getKey());
                     }
                 });
 
@@ -113,11 +114,7 @@ if(FirstActivity.savedBooks.contains(u.getKey())) holder.save.setVisibility(View
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mapactivity.point = new LatLng( u.getLatitude() , u.getLongitude());
-                mapactivity.name = u.getTitle() ;
-                bookandpublisherdetails.name = holder.profilename.getText().toString();
-                bookandpublisherdetails.bookimage = u.getBookimage() ;
-                bookandpublisherdetails.profileimage = profileimagefor ;
+
                 bookandpublisherdetails.key = u.getKey();
                 mapactivity.image = u.getBookimage(); ;
                 Intent i = new Intent( view.getContext() , bookandpublisherdetails.class );

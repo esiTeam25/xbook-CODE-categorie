@@ -57,7 +57,7 @@ public class profilefragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profilefragment, container, false);
-
+/*
         prflimg = v.findViewById(R.id.profileImageId);
         prflname = v.findViewById(R.id.profileNameId);
 
@@ -65,26 +65,7 @@ public class profilefragment extends Fragment {
         ProgressDialog wait = new ProgressDialog(v.getContext());
         wait.setTitle("wait");
         wait.setMessage("wait");
-      //  wait.show();
 
-
-     /*   FirebaseFirestore.getInstance().collection("users")
-                .document(FirebaseAuth.getInstance().getUid().toString())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-            //    if ( !documentSnapshot.get("image").toString().equals("" ) ) {
-                    byte[] decodedString = Base64.decode(documentSnapshot.getString("image").toString(), Base64.DEFAULT);
-                    prflname.setText(documentSnapshot.get("name").toString());
-                    prflimg.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
-                    wait.dismiss();
-               /* }else{
-                    prflname.setText(documentSnapshot.get("name").toString());
-                    wait.dismiss();
-
-                }
-            }
-        });*/
 
         DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users").child( FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
         account.addValueEventListener(new ValueEventListener() {
@@ -111,22 +92,6 @@ public class profilefragment extends Fragment {
 
 
 
-      /*  FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                //Toast.makeText(v.getContext(), value.getString("image"), Toast.LENGTH_SHORT).show();
-                if ( !value.get("image").toString().equals("" ) ) {
-                    byte[] decodedString = Base64.decode( value.getString("image") , Base64.DEFAULT);
-                    prflname.setText(value.get("name").toString());
-                    prflimg.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
-                    wait.dismiss();
-                }else{
-                    prflname.setText(value.get("name").toString());
-                    wait.dismiss();
-
-                }
-            }
-        }) ;*/
 
 
 
@@ -161,7 +126,7 @@ public class profilefragment extends Fragment {
                 startActivity(new Intent( v.getContext() , userhistorybooks.class));
             }
         });
-
+*/
         return v;
     }
 
@@ -173,7 +138,7 @@ public class profilefragment extends Fragment {
 
 
 
-
+/*
 
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -190,16 +155,7 @@ public class profilefragment extends Fragment {
                     Bitmap bitmap = getResizedBitmap(MediaStore.Images.Media.getBitmap( getContext().getContentResolver(), resultUri ) , 50);
                     FirebaseDatabase.getInstance().getReference().child("users")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("image").setValue(convertBitmapToString(bitmap)) ;
-                    /*FirebaseFirestore.getInstance().collection("users")
-                            .document(FirebaseAuth.getInstance().getUid().toString())
-                            .update( "image" , convertBitmapToString(bitmap)).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
 
-                            }
-                        }
-                    });*/
                     prflimg.setImageBitmap(bitmap);
 
                 } catch (IOException e) {
@@ -262,6 +218,6 @@ public class profilefragment extends Fragment {
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
-
+*/
 
 }

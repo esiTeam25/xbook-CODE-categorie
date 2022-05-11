@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,159 +51,35 @@ static  String bookimage ;//= null ;
         profileprofile = findViewById(R.id.profileImageId);
         namee = findViewById(R.id.profileNameid);
 
-        if (bookimage!=null && name != null) {
 
 
 
 
 
 
-            DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
-                    .child(getIntent().getExtras().getString("id"));
-            account.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    namee.setText(snapshot.child("name").getValue().toString());
-                    String profileimagefor = snapshot.child("image").getValue().toString();
-                    if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
-                        byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                        profileprofile.setImageBitmap(decodedByte);
-                        //   holder.profilename.setText(snapshot.child("name").getValue().toString());
-wait.dismiss();
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            if (getIntent().getExtras().getString("id").equals(FirebaseAuth.getInstance().getUid().toString())) {
-                findViewById(R.id.sendmessageid).setVisibility(View.INVISIBLE);
-                findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
-                findViewById(R.id.phonecallid).setVisibility(View.INVISIBLE);
-            }
-            byte[] decodedString2 = Base64.decode(bookimage, Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
-            bookImage.setImageBitmap(decodedByte) ;
-
-            findViewById(R.id.sendmessageid).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(view.getContext(), chat.class);
-                    if(getIntent().getExtras()!=null){
-                        i.putExtra("id", getIntent().getExtras().getString("id"));}
-                    else{i.putExtra("id", id);}
-                    i.putExtra("key" , key) ;
-                    i.putExtra("x", "2");
-                    startActivity(i);
-                }
-            });
-            findViewById(R.id.locationid).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(getIntent().getExtras()!=null) {
-                        startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id", getIntent().getExtras().getString("id")));
-                    }else{
-                        startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id",id));
-
-
-                    }}
-            });
-            findViewById(R.id.phonecallid).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:0558585327"));
-                    startActivity(intent);
-                }
-            });
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        else {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
 
             FirebaseFirestore.getInstance().collection("books").document(key).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     id = task.getResult().getString("id");
                     String imagestr = task.getResult().getString("image");
+                     mapactivity.point = new LatLng(  task.getResult().getDouble("lat") , task.getResult().getDouble("lng"));
+                    mapactivity.name = task.getResult().getString("title") ;
 
-                        byte[] decodedString = Base64.decode(imagestr, Base64.DEFAULT);
+                    byte[] decodedString = Base64.decode(imagestr, Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         bookImage.setImageBitmap(decodedByte);
 
                         if (id.equals(FirebaseAuth.getInstance().getUid().toString())) {
+                            findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
                             findViewById(R.id.sendmessageid).setVisibility(View.INVISIBLE);
                             findViewById(R.id.phonecallid).setVisibility(View.INVISIBLE);
                         }
@@ -253,6 +130,17 @@ wait.dismiss();
                 }
             });
 
+        findViewById(R.id.locationid).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(getIntent().getExtras()!=null) {
+                    startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id", getIntent().getExtras().getString("id")));
+                }else{
+                    startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id",id));
+
+
+                }}
+        });
 
 
 
@@ -294,7 +182,6 @@ wait.dismiss();
 
 
 
-        }
 
 
 
