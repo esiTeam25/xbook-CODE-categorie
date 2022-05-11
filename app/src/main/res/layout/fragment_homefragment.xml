@@ -39,6 +39,15 @@
             android:text="search"
             android:id="@+id/notifsid"
             />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginLeft="2dp"
+            android:layout_width="60dp"
+            android:id="@+id/profileImageId"
+            android:layout_height="60dp"
+            android:src="@color/black"
+            android:layout_gravity="center"
+            />
+
 
 
     </LinearLayout>
