@@ -23,9 +23,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.ortiz.touchview.TouchImageView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,6 +43,7 @@ static  String bookimage ;//= null ;
     public static String key ;//=null ;
     public static String name;// = null;
     TextView namee ;
+    public static ArrayList<String> likedBooks = new ArrayList<>() ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,16 @@ static  String bookimage ;//= null ;
         bookImage = findViewById(R.id.bookImageId);
         profileprofile = findViewById(R.id.profileImageId);
         namee = findViewById(R.id.profileNameid);
+        findViewById(R.id.like).setVisibility(View.INVISIBLE);
+        findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
+        findViewById(R.id.sendmessageid).setVisibility(View.INVISIBLE);
+        findViewById(R.id.phonecallid).setVisibility(View.INVISIBLE);
+        FirebaseFirestore.getInstance().collection("likes"+FirebaseAuth.getInstance().getUid().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(DocumentSnapshot ds :task.getResult().getDocuments()){
+                    likedBooks.add(ds.getString("key")) ;
+                }
 
 
 
@@ -66,81 +82,150 @@ static  String bookimage ;//= null ;
 
 
 
-            FirebaseFirestore.getInstance().collection("books").document(key).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    id = task.getResult().getString("id");
-                    String imagestr = task.getResult().getString("image");
-                     mapactivity.point = new LatLng(  task.getResult().getDouble("lat") , task.getResult().getDouble("lng"));
-                    mapactivity.name = task.getResult().getString("title") ;
 
-                    byte[] decodedString = Base64.decode(imagestr, Base64.DEFAULT);
+
+
+
+
+
+
+
+
+
+                FirebaseFirestore.getInstance().collection("books").document(key).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        id = task.getResult().getString("id");
+                        String imagestr = task.getResult().getString("image");
+                        mapactivity.point = new LatLng(  task.getResult().getDouble("lat") , task.getResult().getDouble("lng"));
+                        mapactivity.name = task.getResult().getString("title") ;
+
+                        byte[] decodedString = Base64.decode(imagestr, Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         bookImage.setImageBitmap(decodedByte);
-
-                        if (id.equals(FirebaseAuth.getInstance().getUid().toString())) {
-                            findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
-                            findViewById(R.id.sendmessageid).setVisibility(View.INVISIBLE);
-                            findViewById(R.id.phonecallid).setVisibility(View.INVISIBLE);
+                        if (!id.equals(FirebaseAuth.getInstance().getUid().toString()))  if(!likedBooks.contains(key)) findViewById(R.id.like).setVisibility(View.VISIBLE);
+                        if (!id.equals(FirebaseAuth.getInstance().getUid().toString())) {
+                            findViewById(R.id.locationid).setVisibility(View.VISIBLE);
+                            findViewById(R.id.sendmessageid).setVisibility(View.VISIBLE);
+                            findViewById(R.id.phonecallid).setVisibility(View.VISIBLE);
                         }
 
-                    DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
-                            .child(id);
-                    account.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            namee.setText(snapshot.child("name").getValue().toString());
-                            String profileimagefor = snapshot.child("image").getValue().toString();
-                            if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
-                                byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
-                                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                                profileprofile.setImageBitmap(decodedByte);
-                             //   holder.profilename.setText(snapshot.child("name").getValue().toString());
-                                wait.dismiss();
+                        DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
+                                .child(id);
+                        account.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                namee.setText(snapshot.child("name").getValue().toString());
+                                String profileimagefor = snapshot.child("image").getValue().toString();
+                                if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
+                                    byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
+                                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                                    profileprofile.setImageBitmap(decodedByte);
+                                    //   holder.profilename.setText(snapshot.child("name").getValue().toString());
+                                    wait.dismiss();
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
                             }
-                        }
+                        });
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
 
-                        }
-                    });
+                findViewById(R.id.sendmessageid).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(view.getContext(), chat.class);
 
-                }
-            });
-
-            findViewById(R.id.sendmessageid).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(view.getContext(), chat.class);
-
-                    i.putExtra("id", id);
-                    i.putExtra("key" , key) ;
-                    i.putExtra("x", "2");
-                    startActivity(i);
-                }
-            });
-            findViewById(R.id.phonecallid).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:0558585327"));
-                    startActivity(intent);
-                }
-            });
-
-        findViewById(R.id.locationid).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(getIntent().getExtras()!=null) {
-                    startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id", getIntent().getExtras().getString("id")));
-                }else{
-                    startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id",id));
+                        i.putExtra("id", id);
+                        i.putExtra("key" , key) ;
+                        i.putExtra("x", "2");
+                        startActivity(i);
+                    }
+                });
 
 
-                }}
+                findViewById(R.id.phonecallid).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:0558585327"));
+                        startActivity(intent);
+                    }
+                });
+
+
+                findViewById(R.id.locationid).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(getIntent().getExtras()!=null) {
+                            startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id", getIntent().getExtras().getString("id")));
+                        }else{
+                            startActivity(new Intent(bookandpublisherdetails.this, mapactivity.class).putExtra("id",id));
+
+
+                        }}
+                });
+
+
+                findViewById(R.id.like).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        findViewById(R.id.like).setVisibility(View.INVISIBLE);
+
+                        HashMap<String, Object> dataaa = new HashMap<>();
+                        dataaa.put("key" , key);
+                        FirebaseFirestore.getInstance().collection("likes"+FirebaseAuth.getInstance().getUid()).add(dataaa).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+
+
+                                DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
+                                        .child(id);
+                                account.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        long number = (long) snapshot.child("likes").getValue() ;
+                                        snapshot.getRef().child("likes").setValue(number+1);
+                                        likedBooks.add(key);
+                                        Toast.makeText(view.getContext(), "liked", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
+                });
+
+
+                wait.dismiss();
+
+
+            }
         });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

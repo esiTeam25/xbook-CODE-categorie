@@ -93,6 +93,8 @@ if(FirstActivity.locationToUpload!=null) {
     holder.distance.setText(String.format("%.2f", SphericalUtil.computeDistanceBetween(new LatLng(u.getLatitude(), u.getLongitude()), FirstActivity.locationToUpload) / 1000) + "km");
 }
 if(FirstActivity.savedBooks.contains(u.getKey())) holder.save.setVisibility(View.INVISIBLE);
+
+
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
