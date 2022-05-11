@@ -161,6 +161,7 @@ if(FirstActivity.locationToUpload==null){
                 dataaa.put("state", stateSpinner.getSelectedItem().toString());
                 dataaa.put("image", imageStringToUpload);
                 dataaa.put("lowimage", lowimageStringToUpload);
+                dataaa.put("description" , description.getText().toString());
                 dataaa.put("lat", FirstActivity.locationToUpload.latitude);
                 dataaa.put("lng", FirstActivity.locationToUpload.longitude);
 

@@ -42,7 +42,7 @@ static  String bookimage ;//= null ;
     CircleImageView profileprofile ;
     public static String key ;//=null ;
     public static String name;// = null;
-    TextView namee ;
+    TextView namee , desc ;
     public static ArrayList<String> likedBooks = new ArrayList<>() ;
 
     @Override
@@ -56,6 +56,7 @@ static  String bookimage ;//= null ;
         bookImage = findViewById(R.id.bookImageId);
         profileprofile = findViewById(R.id.profileImageId);
         namee = findViewById(R.id.profileNameid);
+        desc = findViewById(R.id.bookDescriptionId);
         findViewById(R.id.like).setVisibility(View.INVISIBLE);
         findViewById(R.id.locationid).setVisibility(View.INVISIBLE);
         findViewById(R.id.sendmessageid).setVisibility(View.INVISIBLE);
@@ -99,7 +100,7 @@ static  String bookimage ;//= null ;
                         String imagestr = task.getResult().getString("image");
                         mapactivity.point = new LatLng(  task.getResult().getDouble("lat") , task.getResult().getDouble("lng"));
                         mapactivity.name = task.getResult().getString("title") ;
-
+                        desc.setText(task.getResult().getString("description"));
                         byte[] decodedString = Base64.decode(imagestr, Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         bookImage.setImageBitmap(decodedByte);
@@ -116,12 +117,10 @@ static  String bookimage ;//= null ;
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 namee.setText(snapshot.child("name").getValue().toString());
-                                String profileimagefor = snapshot.child("image").getValue().toString();
                                 if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
                                     byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
                                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                                     profileprofile.setImageBitmap(decodedByte);
-                                    //   holder.profilename.setText(snapshot.child("name").getValue().toString());
                                     wait.dismiss();
 
                                 }
@@ -274,15 +273,5 @@ static  String bookimage ;//= null ;
 
         }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        bookimage=null ;
-    name = null;
-        id =null;
-        profileimage=null ;
-        profileprofile=null ;
-        key =null;
 
-    }
 }
