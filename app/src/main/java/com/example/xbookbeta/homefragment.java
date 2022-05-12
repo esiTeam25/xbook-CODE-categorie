@@ -115,7 +115,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
             }
         });
 
-/*
+
         v.findViewById(R.id.one).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,7 +140,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
             }
         });
-*/
+
         /*
 
 
