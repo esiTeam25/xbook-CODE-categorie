@@ -64,7 +64,7 @@ vp.setOffscreenPageLimit(1);
 
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
 
 
@@ -79,10 +79,9 @@ vp.setOffscreenPageLimit(1);
                     return new MapsFragmentNearby();
                 case 2:
                       return new addbookfragment();
-                      case 3 :
-                    return new chatfragment();
+
             }
-            return new profilefragment();
+            return new chatfragment();
         }
 
 
@@ -96,10 +95,9 @@ vp.setOffscreenPageLimit(1);
                     return "NEARBY" ;
                 case 2 :
                     return "ADD" ;
-                case 3 :
-                    return "CHAT" ;
+
             }
-            return "PROFILE"  ;
+            return "CHAT" ;
         }
     }
 
