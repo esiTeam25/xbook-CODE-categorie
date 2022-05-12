@@ -1,26 +1,19 @@
 package com.example.xbookbeta;
 
-import android.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
+import android.os.Handler;
 import android.util.Base64;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -45,103 +38,24 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
-public class homefragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener   {
+public class books extends AppCompatActivity {
     private TabLayout tl ;
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout ;
-    private Button menubutton , notifs ;
     ProgressBar prgrsbr;
     RecyclerView rv ;
     Boolean end = false ;
-  //  booksadapter rva =  new booksadapter(books); ;
+    booksadapter rva =  new booksadapter(books); ;
     Boolean isloading = false ;
     DocumentSnapshot key = null ;
-    //public static ArrayList<onebook> books = new ArrayList<>() ;
-    CircleImageView prflimg ;
-
+    public static ArrayList<onebook> books = new ArrayList<>() ;
+    public static int catnum ;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_homefragment, container, false);
-        drawerLayout = v.findViewById(R.id.drawerLayoutid);
-        navigationView = v.findViewById(R.id.navigationViewid);
-        menubutton = v.findViewById(R.id.menubuttonid);
-        //prgrsbr = v.findViewById(R.id.prgrsbrid);
-        notifs = v.findViewById(R.id.notifsid);
-        navigationView.setNavigationItemSelectedListener(this);
-        //tl = v.findViewById(R.id.tl);
-        prflimg = v.findViewById(R.id.profileImageId);
-        menubutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(drawerLayout.isDrawerOpen(GravityCompat.START)){drawerLayout.closeDrawer(GravityCompat.START); }
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        notifs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //startActivity(new Intent(v.getContext() , search.class));
-                startActivity(new Intent(v.getContext() , books.class));
-
-            }
-
-        });
-        Toast.makeText(getContext(), FirstActivity.savedBooks.size()+"", Toast.LENGTH_SHORT).show();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_books);
+        prgrsbr = findViewById(R.id.prgrsbrid);
+        tl = findViewById(R.id.tl);
 
 
-        DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users").child( FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
-        account.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
-                    byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
-                    prflimg.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        prflimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext() , profileActivity.class));
-            }
-        });
-
-/*
-        v.findViewById(R.id.one).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              books.catnum = 0 ;
-                startActivity(new Intent(v.getContext() , books.class));
-
-            }
-        });
-        v.findViewById(R.id.two).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                books.catnum = 3 ;
-                startActivity(new Intent(v.getContext() , books.class));
-
-            }
-        });
-        v.findViewById(R.id.three).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                books.catnum = 8 ;
-                startActivity(new Intent(v.getContext() , books.class));
-
-            }
-        });
-*/
-        /*
 
 
         TabLayout.Tab tab0 = tl.newTab() ;
@@ -177,41 +91,13 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         tl.addTab(tab9);
 
         key=null ;
-        rv = v.findViewById(R.id.recyclerView);
-        rv.setLayoutManager( new LinearLayoutManager(v.getContext()));
+        rv = findViewById(R.id.recyclerView);
+        rv.setLayoutManager( new LinearLayoutManager(books.this ));
         rv.setHasFixedSize(true);
 
         books.clear();
         rva.notifyItemRangeRemoved(0 ,books.size());
         rv.setAdapter(rva);
-
-
-
-        addelements(get());
-
-
-
-        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
-            @Override
-            public void onScrolledToEnd() {
-                if (!isloading){
-
-                    isloading=true ;
-
-                    addelements(get());
-
-
-
-
-                }
-            }
-        });
-
-
-
-
-
-
 
 
 
@@ -237,7 +123,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -278,7 +164,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -315,7 +201,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -353,7 +239,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -391,7 +277,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -426,7 +312,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -462,7 +348,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -498,7 +384,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -534,7 +420,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -570,7 +456,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(getActivity())) {
+                        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
                             @Override
                             public void onScrolledToEnd() {
                                 if (!isloading){
@@ -609,38 +495,73 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         });
 
 
+switch (catnum){
+    case 0 :
+        tl.selectTab(tab0);
+        addelements(get());
+
+
+
+        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener(new LinearLayoutManager(books.this )) {
+            @Override
+            public void onScrolledToEnd() {
+                if (!isloading){
+
+                    isloading=true ;
+
+                    addelements(get());
 
 
 
 
+                }
+            }
+        });
 
 
 
+        break ;
+    case 3 :
+        tl.selectTab(tab3);
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override public void run() {
+                        tl.getTabAt(3).select();
+                    }
+                }, 100);
+        break ;
+    case 8 :
+        tl.selectTab(tab8);
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override public void run() {
+                        tl.getTabAt(8).select();
+                    }
+                }, 100);
+        break ;
 
-*/
+}
 
 
-
-
-
-
-        return  v ;
     }
 
 
 
 
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent ( getActivity(), LoginActivity.class) );
-        getActivity().finish();
-        return false;
-    }
 
 
-/*
+
+
+
+
+
+
+
+
+
+
+
 
     public void addelements(Query get ){
 
@@ -718,11 +639,4 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         }
     }
 
-*/
-
-
 }
-
-
-
-
