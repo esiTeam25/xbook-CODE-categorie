@@ -1,5 +1,7 @@
 package com.example.xbookbeta;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +25,15 @@ public class categoriesAdapter extends RecyclerView.Adapter<categoriesAdapter.vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull viewholder holder, @SuppressLint("RecyclerView") int position) {
      holder.image.setImageResource(images.get(position));
+     holder.image.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+             books.catnum = position ;
+             view.getContext().startActivity(new Intent(view.getContext() , books.class));
+         }
+     });
 
     }
 
