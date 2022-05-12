@@ -90,6 +90,17 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
         });
         Toast.makeText(getContext(), FirstActivity.savedBooks.size()+"", Toast.LENGTH_SHORT).show();
+        ArrayList<Integer> cats = new ArrayList<>();
+        cats.add(R.drawable.blue);
+        cats.add(R.drawable.orange);
+        cats.add(R.drawable.green);
+        cats.add(R.drawable.grey);
+        cats.add(R.drawable.brown);
+        cats.add(R.drawable.red);
+        cats.add(R.drawable.pink);
+        cats.add(R.drawable.yellow);
+        RecyclerView rv = v.findViewById(R.id.categoriesId) ;
+        rv.setAdapter(new categoriesAdapter(cats) );
 
 
         DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users").child( FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
@@ -116,30 +127,6 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         });
 
 
-        v.findViewById(R.id.one).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              books.catnum = 0 ;
-                startActivity(new Intent(v.getContext() , books.class));
-
-            }
-        });
-        v.findViewById(R.id.two).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                books.catnum = 3 ;
-                startActivity(new Intent(v.getContext() , books.class));
-
-            }
-        });
-        v.findViewById(R.id.three).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                books.catnum = 8 ;
-                startActivity(new Intent(v.getContext() , books.class));
-
-            }
-        });
 
         /*
 

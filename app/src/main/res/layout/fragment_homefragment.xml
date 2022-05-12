@@ -58,25 +58,13 @@
             android:layout_below="@+id/lnr"
             android:orientation="vertical"
             >
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="menu"
-                android:id="@+id/one"
-                android:layout_gravity="start"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="menu"
-                android:id="@+id/two"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="menu"
-                android:id="@+id/three"
-                />
+         <androidx.recyclerview.widget.RecyclerView
+             android:layout_width="match_parent"
+             android:layout_height="200dp"
+             android:id="@+id/categoriesId"
+             android:orientation="horizontal"
+             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+             />
 
         </LinearLayout>
 
