@@ -65,9 +65,6 @@
             android:name=".chat"
             android:exported="false" />
         <activity
-            android:name=".Signup"
-            android:exported="false" />
-        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity

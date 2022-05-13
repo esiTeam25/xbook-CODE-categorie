@@ -5,52 +5,149 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+
     android:orientation="vertical"
     tools:context=".LoginActivity">
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/black"
-
-        android:imeOptions="actionNext"
-        android:background="#696969"
-        android:hint="email"
-        android:id="@+id/emailid"
-       />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#696969"
-        android:textColor="@color/black"
-
-        android:inputType="textEmailAddress"
-        android:imeOptions="actionDone"
-        android:hint="password"
-        android:id="@+id/passwordid"
-
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"/>
-    <Button
+    <ViewFlipper
         android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:text="login"
-        android:id="@+id/loginid"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"/>
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:text="signup"
-        android:id="@+id/signupid"
-        />
+        android:layout_height="match_parent"
+        android:id="@+id/viewFlipper"
+ >
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/black"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+
+                android:imeOptions="actionNext"
+                android:background="#696969"
+                android:hint="email"
+                android:id="@+id/emailid"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#696969"
+                android:textColor="@color/black"
+
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionDone"
+                android:hint="password"
+                android:id="@+id/passwordid"
+
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:text="login"
+                android:id="@+id/loginid"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:text="signup"
+                android:id="@+id/movetosignupid"
+                />
+
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:orientation="vertical"
+
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"
+                android:textColor="@color/black"
+                android:background="#696969"
+                android:id="@+id/signemailid"
+                android:hint="email"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#696969"
+                android:textColor="@color/black"
+
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:hint="user"
+                android:id="@+id/signnameid"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#696969"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+
+                android:imeOptions="actionDone"
+                android:hint="password"
+                android:id="@+id/signpasswordid"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:text="signup"
+                android:id="@+id/signupid"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:text="login"
+                android:id="@+id/movetologinid"
+                />
+        </LinearLayout>
+
+
+
+    </ViewFlipper>
+
 
 </LinearLayout>
