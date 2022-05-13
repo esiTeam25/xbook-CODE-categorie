@@ -10,98 +10,122 @@
     android:background="@color/white"
 
     tools:context=".homefragment">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:id="@+id/lnr"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="menu"
-            android:id="@+id/menubuttonid"
-            android:layout_gravity="start"
-            />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:text="search"
-            android:id="@+id/notifsid"
-            />
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_marginLeft="2dp"
-            android:layout_width="60dp"
-            android:id="@+id/profileImageId"
-            android:layout_height="60dp"
-            android:src="@color/black"
-            android:layout_gravity="center"
-            />
-
-
-
-    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/lnr"
-            android:orientation="vertical"
+            android:layout_height="70dp"
+            android:id="@+id/lnr"
             >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Categories"
-                android:textColor="@color/black"
-                android:textSize="40dp"
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="menu"
+                android:id="@+id/menubuttonid"
+                android:layout_gravity="start"
                 />
-         <androidx.recyclerview.widget.RecyclerView
-             android:layout_width="match_parent"
-             android:layout_height="200dp"
-             android:id="@+id/categoriesId"
-             android:orientation="horizontal"
-             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-             />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="users of mounth"
-                android:textColor="@color/black"
-                android:textSize="40dp"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
                 />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <View
-                    android:layout_width="200dp"
-                    android:layout_height="match_parent"
-                    android:background="#A020F0"
-                    />
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:text="search"
+                android:id="@+id/notifsid"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginLeft="2dp"
+                android:layout_width="60dp"
+                android:id="@+id/profileImageId"
+                android:layout_height="60dp"
+                android:src="@color/black"
                 android:layout_gravity="center"
-                android:id="@+id/usersid"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 />
-            </LinearLayout>
+
+
+
         </LinearLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
 
 
-    </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_height="200dp"
+                        android:background=" #964B00"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Categories"
+                        android:textColor="@color/black"
+                        android:textSize="40dp"
+                        />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:id="@+id/categoriesId"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="users of mounth"
+                        android:textColor="@color/black"
+                        android:textSize="40dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <View
+                            android:layout_width="200dp"
+                            android:layout_height="match_parent"
+                            android:background="#A020F0"
+                            />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_gravity="center"
+                            android:id="@+id/usersid"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
 
 
 
