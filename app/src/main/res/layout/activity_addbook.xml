@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+
+    android:layout_height="match_parent"
+    tools:context=".addbookfragment">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:visibility="invisible"
+        android:id="@+id/nogps"
+        android:text="this functionality needs GPS autorisation"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/allid"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add image"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:inputType="text"
+            />
+
+
+        <com.ortiz.touchview.TouchImageView
+            android:id="@+id/bookImageId"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="20dp"
+
+            android:layout_weight="50"
+            android:src="#FFA500" />
+
+        <EditText
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:background="#696969"
+            android:textColor="@color/black"
+            android:hint="  Title..."
+            android:id="@+id/bookTitleId"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            />
+        <EditText
+            android:layout_margin="10dp"
+            android:background="#696969"
+            android:textColor="@color/black"
+            android:id="@+id/bookDescriptionId"
+            android:hint="  Description"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            />
+        <Spinner
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textColor="@color/black"
+            android:background="#696969"
+
+            android:layout_weight="10"
+            android:id="@+id/categorieSpinnerId"
+            />
+        <Spinner
+            android:layout_margin="10dp"
+            android:background="#696969"
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:id="@+id/stateSpinnerId"
+            android:textColor="@color/black"
+
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:layout_gravity="center"
+            android:text="ADD"
+            android:id="@+id/addBookButton"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

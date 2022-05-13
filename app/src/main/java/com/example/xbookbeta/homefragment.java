@@ -156,7 +156,12 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
             }
         });
 
-
+         v.findViewById(R.id.addbook).setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 startActivity(new Intent(getContext() , addbook.class));
+             }
+         });
 
         /*
 

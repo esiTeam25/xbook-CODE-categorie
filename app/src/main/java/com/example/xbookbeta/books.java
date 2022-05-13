@@ -686,20 +686,20 @@ switch (catnum){
     public Query get(){
         if (key== null ) {
 
-            return FirebaseFirestore.getInstance().collection("books").limit(5) ;
+            return FirebaseFirestore.getInstance().collection("books").limit(10) ;
         }
         else {
-            return FirebaseFirestore.getInstance().collection("books").startAfter(key).limit(5);
+            return FirebaseFirestore.getInstance().collection("books").startAfter(key).limit(10);
         }
     }
 
     public Query getc(String c){
         if (key== null ) {
 
-            return FirebaseFirestore.getInstance().collection("books").whereEqualTo("categorie" , c).limit(5) ;
+            return FirebaseFirestore.getInstance().collection("books").whereEqualTo("categorie" , c).limit(10) ;
         }
         else {
-            return FirebaseFirestore.getInstance().collection("books").whereEqualTo("categorie" , c).startAfter(key).limit(5);
+            return FirebaseFirestore.getInstance().collection("books").whereEqualTo("categorie" , c).startAfter(key).limit(10);
         }
     }
 

@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Xbookbeta">
         <activity
+            android:name=".addbook"
+            android:exported="false" />
+        <activity
             android:name=".books"
             android:exported="false" />
         <activity
