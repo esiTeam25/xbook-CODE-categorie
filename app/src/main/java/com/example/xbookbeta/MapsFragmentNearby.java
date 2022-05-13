@@ -48,7 +48,7 @@ import uk.co.mgbramwell.geofire.android.model.Distance;
 import uk.co.mgbramwell.geofire.android.model.DistanceUnit;
 import uk.co.mgbramwell.geofire.android.model.QueryLocation;
 
-public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerClickListener{
+public class MapsFragmentNearby extends Fragment {
 
 
 
@@ -59,7 +59,7 @@ public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerC
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            if(FirstActivity.locationToUpload!=null) {
+           if(FirstActivity.locationToUpload!=null) {
 
                 LatLng sydney = new LatLng(FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
                 // googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -149,6 +149,15 @@ public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerC
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
+            if(FirstActivity.locationToUpload==null) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("this functionality needs GPS autorisation")
+                        .setCancelable(true)
+                ;
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
 
         }
     }
@@ -157,7 +166,7 @@ public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerC
 
 
 
-
+/*
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -193,7 +202,7 @@ public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerC
 
 
 
-
+*/
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
@@ -238,9 +247,5 @@ public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerC
     }
 
 
-    @Override
-    public boolean onMarkerClick(@NonNull Marker marker) {
 
-        return false;
-    }
 }

@@ -34,19 +34,23 @@ Fragment fragment ;
        // tlbr = findViewById(R.id.tlbrid);
         chipNavigationBar = findViewById(R.id.tabbar);
         chipNavigationBar.setItemSelected(R.id.home , true);
+
+        //getSupportFragmentManager().beginTransaction().replace(R.id.pager , new MapsFragmentNearby()).commit();
+
         getSupportFragmentManager().beginTransaction().replace(R.id.pager , new homefragment()).commit();
+
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int i) {
                 switch (i){
                     case R.id.home:
-                        fragment = new homefragment();
+                        fragment = new homefragment() ;;
                         break ;
                     case R.id.nearby:
                         fragment = new MapsFragmentNearby();
                         break ;
                     case R.id.chat:
-                        fragment = new chatfragment();
+                        fragment = new chatfragment();;
                         break ;
                 }
                 if (fragment != null){
@@ -55,17 +59,7 @@ Fragment fragment ;
             }
         });
 
-     /*   HashMap<String , Double> locationfiresotre = new HashMap<>();
-        locationfiresotre.put("latitude" , FirstActivity.locationToUpload.latitude);
-        locationfiresotre.put("longitude" , FirstActivity.locationToUpload.longitude);
 
-
-        FirebaseFirestore.getInstance().collection("users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
-                .update("latitude" ,FirstActivity.locationToUpload.latitude );
-        FirebaseFirestore.getInstance().collection("users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
-                .update("longitude" ,FirstActivity.locationToUpload.longitude);*/
     }
 
 
