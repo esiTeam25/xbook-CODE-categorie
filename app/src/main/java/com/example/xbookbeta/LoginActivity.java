@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-    findViewById(R.id.movetologinid).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.movetologinid).setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             semail.setText("");
