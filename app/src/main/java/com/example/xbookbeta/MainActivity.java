@@ -10,27 +10,32 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity   {
 
     private Toolbar tlbr ;
     private TabLayout tl ;
     private ViewPager vp ;
     private long pressedTime;
     ChipNavigationBar chipNavigationBar ;
-Fragment fragment ;
+    Fragment fragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        vp = findViewById(R.id.pager);
+        vp.setAdapter(new vadapter(getSupportFragmentManager()));
        // tlbr = findViewById(R.id.tlbrid);
         chipNavigationBar = findViewById(R.id.tabbar);
         chipNavigationBar.setItemSelected(R.id.home , true);
@@ -44,24 +49,50 @@ Fragment fragment ;
             public void onItemSelected(int i) {
                 switch (i){
                     case R.id.home:
-                        fragment = new homefragment() ;;
+                        vp.setCurrentItem(0);
                         break ;
                     case R.id.nearby:
-                        fragment = new MapsFragmentNearby();
+                        vp.setCurrentItem(1);
                         break ;
                     case R.id.chat:
-                        fragment = new chatfragment();;
+                        vp.setCurrentItem(2);
                         break ;
                 }
-                if (fragment != null){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.pager , fragment).commit() ;
-                }
+
             }
         });
 
 
     }
 
+
+    public class vadapter extends FragmentPagerAdapter {
+        public vadapter(@NonNull FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+
+            switch (position){
+                case 0 :
+                    return new homefragment();
+                case 1 :
+                    return new MapsFragmentNearby();
+
+            }
+            return new chatfragment();
+        }
+
+
+    }
 
 
     @Override
@@ -75,4 +106,7 @@ Fragment fragment ;
             Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
         }
         pressedTime = System.currentTimeMillis();    }
+
+
+
 }
