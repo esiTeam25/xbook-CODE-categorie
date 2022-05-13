@@ -32,6 +32,8 @@
                 android:textColor="@color/black"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:paddingLeft="10dp"
+
                 android:imeOptions="actionNext"
                 android:background="#696969"
                 android:hint="email"
@@ -47,6 +49,8 @@
                 android:textColor="@color/black"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:paddingLeft="10dp"
+
                 android:inputType="textEmailAddress"
                 android:imeOptions="actionDone"
                 android:hint="password"
@@ -57,18 +61,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="20dp"/>
             <Button
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="login"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/loginid"
                 />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp"/>
             <Button
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="signup"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/movetosignupid"
                 />
 
@@ -99,6 +107,7 @@
                 android:background="#696969"
                 android:id="@+id/signemailid"
                 android:hint="email"
+                android:paddingLeft="10dp"
                 />
             <View
                 android:layout_width="match_parent"
@@ -111,6 +120,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:inputType="text"
+                android:paddingLeft="10dp"
+
                 android:imeOptions="actionNext"
                 android:hint="user"
                 android:id="@+id/signnameid"
@@ -127,6 +138,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:imeOptions="actionDone"
+                android:paddingLeft="10dp"
+
                 android:hint="password"
                 android:id="@+id/signpasswordid"
                 />
@@ -135,8 +148,10 @@
                 android:layout_height="20dp"/>
 
             <Button
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:text="signup"
                 android:id="@+id/signupid"
                 />
@@ -144,7 +159,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="20dp"/>
             <Button
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_height="50dp"
                 android:text="login"
                 android:id="@+id/movetologinid"
