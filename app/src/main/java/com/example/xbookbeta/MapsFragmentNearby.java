@@ -63,7 +63,7 @@ public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerC
 
                 LatLng sydney = new LatLng(FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
                 // googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+               // googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14f));
                  GeoFire geoFire = new GeoFire(FirebaseFirestore.getInstance().collection("books"));
                 QueryLocation queryLocation = QueryLocation.fromDegrees(FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
@@ -145,12 +145,12 @@ public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerC
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       /* SupportMapFragment mapFragment =
+        SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
 
-        }*/
+        }
     }
 
 

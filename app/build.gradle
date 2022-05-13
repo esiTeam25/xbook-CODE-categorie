@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.xbookbeta"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -57,4 +57,10 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+
+
+    implementation'com.ismaeldivita.chipnavigation:chip-navigation-bar:1.3.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.72"
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
 }

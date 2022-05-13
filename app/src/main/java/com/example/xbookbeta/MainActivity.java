@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,25 +24,36 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tl ;
     private ViewPager vp ;
     private long pressedTime;
-
+    ChipNavigationBar chipNavigationBar ;
+Fragment fragment ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
        // tlbr = findViewById(R.id.tlbrid);
-        tl = findViewById(R.id.tl);
-        vp = findViewById(R.id.vpid);
-        vp.setAdapter(new vadapter(getSupportFragmentManager()));
-        tl.setupWithViewPager(vp);
-if ( FirstActivity.locationToUpload!=null ){
-    Toast.makeText(MainActivity.this, FirstActivity.locationToUpload.latitude + "*" + FirstActivity.locationToUpload.latitude, Toast.LENGTH_SHORT).show();
-}
-vp.setOffscreenPageLimit(1);
-       FirebaseDatabase.getInstance().getReference().child("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("location")
-                .setValue( FirstActivity.locationToUpload ) ;
-
+        chipNavigationBar = findViewById(R.id.tabbar);
+        chipNavigationBar.setItemSelected(R.id.home , true);
+        getSupportFragmentManager().beginTransaction().replace(R.id.pager , new homefragment()).commit();
+        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int i) {
+                switch (i){
+                    case R.id.home:
+                        fragment = new homefragment();
+                        break ;
+                    case R.id.nearby:
+                        fragment = new MapsFragmentNearby();
+                        break ;
+                    case R.id.chat:
+                        fragment = new chatfragment();
+                        break ;
+                }
+                if (fragment != null){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.pager , fragment).commit() ;
+                }
+            }
+        });
 
      /*   HashMap<String , Double> locationfiresotre = new HashMap<>();
         locationfiresotre.put("latitude" , FirstActivity.locationToUpload.latitude);
@@ -57,47 +69,6 @@ vp.setOffscreenPageLimit(1);
     }
 
 
-    public class vadapter extends FragmentPagerAdapter {
-        public vadapter(@NonNull FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-
-            switch (position){
-                case 0 :
-                    return new homefragment();
-                case 1 :
-                    return new MapsFragmentNearby();
-
-
-            }
-            return new chatfragment();
-        }
-
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position){
-                case 0 :
-                    return  "HOME";
-                case 1 :
-                    return "NEARBY" ;
-
-
-            }
-            return "CHAT" ;
-        }
-    }
 
     @Override
     public void onBackPressed() {

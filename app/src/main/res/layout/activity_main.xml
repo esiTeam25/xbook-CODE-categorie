@@ -4,23 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/black"
-
+android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+  >
 
 
-
-    <androidx.viewpager.widget.ViewPager
+    <FrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/vpid"
         android:layout_height="0dp"
-        android:layout_weight="100"
+        android:layout_weight="95"
+        android:id="@+id/pager"
         />
-    <com.google.android.material.tabs.TabLayout
+    <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:layout_width="match_parent"
-        app:tabTextColor="@color/white"
-        android:layout_height="50dp"
-        android:id="@+id/tl"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        app:cnb_iconSize="50dp"
+        app:cnb_menuResource="@menu/menu2"
+        android:id="@+id/tabbar"
         />
+
 </LinearLayout>
