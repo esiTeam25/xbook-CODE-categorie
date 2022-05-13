@@ -58,6 +58,13 @@
             android:layout_below="@+id/lnr"
             android:orientation="vertical"
             >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Categories"
+                android:textColor="@color/black"
+                android:textSize="40dp"
+                />
          <androidx.recyclerview.widget.RecyclerView
              android:layout_width="match_parent"
              android:layout_height="200dp"

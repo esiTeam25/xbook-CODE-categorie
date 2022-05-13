@@ -521,6 +521,24 @@ switch (catnum){
 
 
         break ;
+    case 1 :
+        tl.selectTab(tab1);
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override public void run() {
+                        tl.getTabAt(1).select();
+                    }
+                }, 100);
+        break ;
+    case 2 :
+        tl.selectTab(tab2);
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override public void run() {
+                        tl.getTabAt(2).select();
+                    }
+                }, 100);
+        break ;
     case 3 :
         tl.selectTab(tab3);
         new Handler().postDelayed(
@@ -530,12 +548,58 @@ switch (catnum){
                     }
                 }, 100);
         break ;
+    case 4 :
+        tl.selectTab(tab4);
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override public void run() {
+                        tl.getTabAt(4).select();
+                    }
+                }, 100);
+        break ;
+    case 5 :
+        tl.selectTab(tab5);
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override public void run() {
+                        tl.getTabAt(5).select();
+                    }
+                }, 100);
+        break ;
+    case 6 :
+        tl.selectTab(tab3);
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override public void run() {
+                        tl.getTabAt(6).select();
+                    }
+                }, 100);
+        break ;
+    case 7 :
+        tl.selectTab(tab3);
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override public void run() {
+                        tl.getTabAt(7).select();
+                    }
+                }, 100);
+        break ;
+
     case 8 :
         tl.selectTab(tab8);
         new Handler().postDelayed(
                 new Runnable() {
                     @Override public void run() {
                         tl.getTabAt(8).select();
+                    }
+                }, 100);
+        break ;
+    case 9 :
+        tl.selectTab(tab3);
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override public void run() {
+                        tl.getTabAt(9).select();
                     }
                 }, 100);
         break ;

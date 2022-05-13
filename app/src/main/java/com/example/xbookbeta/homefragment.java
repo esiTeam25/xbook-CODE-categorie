@@ -99,6 +99,8 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         cats.add(R.drawable.red);
         cats.add(R.drawable.pink);
         cats.add(R.drawable.yellow);
+        cats.add(R.drawable.bluetwo);
+        cats.add(R.drawable.images);
         RecyclerView rv = v.findViewById(R.id.categoriesId) ;
         rv.setAdapter(new categoriesAdapter(cats) );
 
