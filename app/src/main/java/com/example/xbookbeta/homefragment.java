@@ -771,7 +771,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-        FirebaseFirestore.getInstance().collection("books").orderBy("likes").limit(4).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        FirebaseFirestore.getInstance().collection("books").orderBy("likes", Query.Direction.DESCENDING).limit(5).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentChange dc : value.getDocumentChanges()){
