@@ -30,7 +30,8 @@
                 android:layout_height="50dp"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black"
-
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:imeOptions="actionNext"
                 android:background="#696969"
                 android:hint="email"
@@ -44,7 +45,8 @@
                 android:layout_height="50dp"
                 android:background="#696969"
                 android:textColor="@color/black"
-
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:inputType="textEmailAddress"
                 android:imeOptions="actionDone"
                 android:hint="password"
@@ -92,6 +94,8 @@
                 android:inputType="textEmailAddress"
                 android:imeOptions="actionNext"
                 android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:background="#696969"
                 android:id="@+id/signemailid"
                 android:hint="email"
@@ -104,7 +108,8 @@
                 android:layout_height="50dp"
                 android:background="#696969"
                 android:textColor="@color/black"
-
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:inputType="text"
                 android:imeOptions="actionNext"
                 android:hint="user"
@@ -119,7 +124,8 @@
                 android:background="#696969"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black"
-
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:imeOptions="actionDone"
                 android:hint="password"
                 android:id="@+id/signpasswordid"
