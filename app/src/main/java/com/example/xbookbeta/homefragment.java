@@ -56,6 +56,9 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
     private Button menubutton , notifs ;
     ProgressBar prgrsbr;
     RecyclerView rv ;
+    profilebooksadapter rva =  new profilebooksadapter(books) ;
+    public static ArrayList<onebook> books = new ArrayList<>() ;
+
     Boolean end = false ;
   //  booksadapter rva =  new booksadapter(books); ;
     Boolean isloading = false ;
@@ -637,6 +640,30 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
+        rv = v.findViewById(R.id.rvid);
+        rv.setAdapter(rva);
+        rv.setHasFixedSize(true);
+        LinearLayoutManager lm = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rv.setLayoutManager(lm);
+        books.clear();
+
+        addelements();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return  v ;
     }
@@ -733,6 +760,44 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
     }
 
 */
+
+
+
+
+
+    public void addelements(){
+
+
+
+
+
+        FirebaseFirestore.getInstance().collection("books").orderBy("likes").limit(4).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for (DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        books.add(
+                                new
+                                        onebook(  dc.getDocument().getString("image") ,dc.getDocument().getString("title") , dc.getDocument().getString("categorie") , dc.getDocument().getDouble("latitude")  , dc.getDocument().getDouble("longitude"))) ;
+                    }
+
+
+
+                }
+                rva.notifyDataSetChanged();
+                rva.notifyItemRangeInserted(books.size() , books.size());
+
+
+
+                //  rv.smoothScrollToPosition(0);
+            }
+
+        });
+
+
+    }
+
+
 
 
 }

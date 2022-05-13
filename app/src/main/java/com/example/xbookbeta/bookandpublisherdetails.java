@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ortiz.touchview.TouchImageView;
@@ -182,24 +183,29 @@ static  String bookimage ;//= null ;
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
 
-
-                                DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
-                                        .child(id);
-                                account.addListenerForSingleValueEvent(new ValueEventListener() {
+                                FirebaseFirestore.getInstance().collection("books").document(key).update("likes" , FieldValue.increment(1)).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        long number = (long) snapshot.child("likes").getValue() ;
-                                        snapshot.getRef().child("likes").setValue(number+1);
-                                        likedBooks.add(key);
-                                        Toast.makeText(view.getContext(), "liked", Toast.LENGTH_SHORT).show();
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        DatabaseReference account = FirebaseDatabase.getInstance().getReference().child("users")
+                                                .child(id);
+                                        account.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                long number = (long) snapshot.child("likes").getValue() ;
+                                                snapshot.getRef().child("likes").setValue(number+1);
+                                                likedBooks.add(key);
+                                                Toast.makeText(view.getContext(), "liked", Toast.LENGTH_SHORT).show();
 
-                                    }
+                                            }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
 
+                                            }
+                                        });
                                     }
                                 });
+
 
                             }
                         });
