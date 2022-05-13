@@ -25,6 +25,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +44,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -89,6 +92,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
             }
 
         });
+
         Toast.makeText(getContext(), FirstActivity.savedBooks.size()+"", Toast.LENGTH_SHORT).show();
         ArrayList<Integer> cats = new ArrayList<>();
         cats.add(R.drawable.blue);
@@ -114,6 +118,27 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
                     prflimg.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
                 }
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        RecyclerView usersrv = v.findViewById(R.id.usersid);
+       ArrayList<String> users = new ArrayList<String>() ;
+        topuseradapter usersadapter = new topuseradapter(users);
+        usersrv.setAdapter(usersadapter);
+        FirebaseDatabase.getInstance().getReference().child("users").orderByChild("likes").limitToLast(6).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                users.clear();
+                for(DataSnapshot snapshot1 : snapshot.getChildren() ) users.add(snapshot1.child("image").getValue().toString());
+                Collections.reverse(users);
+                 usersadapter.notifyDataSetChanged();
+
+
+           }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -72,7 +72,31 @@
              android:orientation="horizontal"
              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
              />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="users of mounth"
+                android:textColor="@color/black"
+                android:textSize="40dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:background="#A020F0"
+                    />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:id="@+id/usersid"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+            </LinearLayout>
         </LinearLayout>
 
 
