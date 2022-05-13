@@ -83,8 +83,8 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
             @Override
             public void onClick(View view) {
 
-                //startActivity(new Intent(v.getContext() , search.class));
-                startActivity(new Intent(v.getContext() , books.class));
+                startActivity(new Intent(v.getContext() , search.class));
+               // startActivity(new Intent(v.getContext() , books.class));
 
             }
 
