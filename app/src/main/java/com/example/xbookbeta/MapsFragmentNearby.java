@@ -63,7 +63,7 @@ public class MapsFragmentNearby extends Fragment {
 
                 LatLng sydney = new LatLng(FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
                 // googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-               // googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14f));
                  GeoFire geoFire = new GeoFire(FirebaseFirestore.getInstance().collection("books"));
                 QueryLocation queryLocation = QueryLocation.fromDegrees(FirstActivity.locationToUpload.latitude, FirstActivity.locationToUpload.longitude);
@@ -132,7 +132,6 @@ public class MapsFragmentNearby extends Fragment {
 
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -145,10 +144,27 @@ public class MapsFragmentNearby extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SupportMapFragment mapFragment =
+       /* SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
+        }*/
+    }
+
+
+
+
+
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+
+
+
+
             if(FirstActivity.locationToUpload==null) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -157,10 +173,24 @@ public class MapsFragmentNearby extends Fragment {
                 ;
                 AlertDialog alert = builder.create();
                 alert.show();
+            }else{
+                SupportMapFragment mapFragment =
+                        (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+                if (mapFragment != null) {
+                    mapFragment.getMapAsync(callback);
+
+                }
+
+
             }
 
+        }else{
+            // fragment is no longer visible
         }
     }
+
+
+
 
 
 
