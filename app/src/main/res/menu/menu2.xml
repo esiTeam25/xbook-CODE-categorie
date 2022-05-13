@@ -6,6 +6,7 @@
     android:icon="@drawable/ic_launcher_foreground"
     android:title="Home"
     app:cnb_iconColor="#ffffff"
+
     app:cnb_textColor="#ffffff"
     />
     <item
@@ -13,12 +14,14 @@
         android:icon="@drawable/ic_launcher_foreground"
         android:title="Nearby"
         app:cnb_iconColor="#ffffff"
+
         app:cnb_textColor="#ffffff"
         />
     <item
         android:id="@+id/chat"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="Chat"
+
         app:cnb_iconColor="#ffffff"
         app:cnb_textColor="#ffffff"
         />

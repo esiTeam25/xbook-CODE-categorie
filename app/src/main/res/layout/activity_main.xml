@@ -23,6 +23,9 @@ android:orientation="vertical"
         app:cnb_iconSize="50dp"
         app:cnb_menuResource="@menu/menu2"
         android:id="@+id/tabbar"
+        cnb_unselectedColor="#000000"
+        android:background="@color/purple_500"
+        app:cnb_radius="10dp"
         />
 
 </LinearLayout>

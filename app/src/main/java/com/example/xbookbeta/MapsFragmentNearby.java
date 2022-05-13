@@ -195,7 +195,6 @@ public class MapsFragmentNearby extends Fragment implements  GoogleMap.OnMarkerC
 
 
 
-
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
                 .getHeight(), Bitmap.Config.ARGB_8888);
