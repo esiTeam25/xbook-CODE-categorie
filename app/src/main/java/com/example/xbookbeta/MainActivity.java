@@ -36,13 +36,10 @@ public class MainActivity extends AppCompatActivity   {
         setContentView(R.layout.activity_main);
         vp = findViewById(R.id.pager);
         vp.setAdapter(new vadapter(getSupportFragmentManager()));
-       // tlbr = findViewById(R.id.tlbrid);
         chipNavigationBar = findViewById(R.id.tabbar);
         chipNavigationBar.setItemSelected(R.id.home , true);
 
-        //getSupportFragmentManager().beginTransaction().replace(R.id.pager , new MapsFragmentNearby()).commit();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.pager , new homefragment()).commit();
 
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
@@ -85,10 +82,11 @@ public class MainActivity extends AppCompatActivity   {
                 case 0 :
                     return new homefragment();
                 case 1 :
+
                     return new MapsFragmentNearby();
 
             }
-            return new chatfragment();
+   return new chatfragment();
         }
 
 
