@@ -19,6 +19,7 @@
 
 
         <androidx.cardview.widget.CardView
+            android:background="#FFFFFF"
             android:id="@+id/lnr"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -85,13 +86,13 @@
             >
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 >
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     >
                     <com.smarteist.autoimageslider.SliderView
@@ -258,16 +259,15 @@
                             android:orientation="horizontal" />
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/shimmerLayout2"
-                            android:layout_width="250dp"
+                            android:layout_width="match_parent"
 
-                            android:layout_alignParentRight="true"
                             android:layout_height="wrap_content"
                             app:shimmer_repeat_mode="restart"
                             app:shimmer_shape="radial">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="230dp"
                                 android:orientation="horizontal">
 
                                 <include layout="@layout/gridtwo"></include>
