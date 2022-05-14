@@ -220,7 +220,13 @@ static  String bookimage ;//= null ;
             }
         });
 
-
+profileprofile.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        otherprofile.id = id;
+       startActivity(new Intent(bookandpublisherdetails.this, otherprofile.class));
+    }
+});
 
 
 
