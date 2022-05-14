@@ -1,5 +1,7 @@
 package com.example.xbookbeta;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -15,9 +17,9 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class topuseradapter extends RecyclerView.Adapter<topuseradapter.viewholder> {
-    ArrayList<String> users ;
+    ArrayList<userandid> users ;
 
-    public topuseradapter(ArrayList<String> users) {
+    public topuseradapter(ArrayList<userandid> users) {
         this.users = users;
     }
 
@@ -29,11 +31,18 @@ public class topuseradapter extends RecyclerView.Adapter<topuseradapter.viewhold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull viewholder holder, @SuppressLint("RecyclerView") int position) {
         if(!users.get(position).equals("")) {
-            byte[] decodedString = Base64.decode(users.get(position), Base64.DEFAULT);
+            byte[] decodedString = Base64.decode(users.get(position).image, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             holder.userImage.setImageBitmap(decodedByte);
+            holder.userImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    otherprofile.id = users.get(position).id;
+                    view.getContext().startActivity(new Intent(view.getContext() , otherprofile.class));
+                }
+            });
         }
     }
 

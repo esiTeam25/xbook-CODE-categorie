@@ -129,14 +129,14 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         });
 
         RecyclerView usersrv = v.findViewById(R.id.usersid);
-       ArrayList<String> users = new ArrayList<String>() ;
+       ArrayList<userandid> users = new ArrayList<userandid>() ;
         topuseradapter usersadapter = new topuseradapter(users);
         usersrv.setAdapter(usersadapter);
         FirebaseDatabase.getInstance().getReference().child("users").orderByChild("likes").limitToLast(6).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 users.clear();
-                for(DataSnapshot snapshot1 : snapshot.getChildren() ) users.add(snapshot1.child("image").getValue().toString());
+                for(DataSnapshot snapshot1 : snapshot.getChildren() ) users.add(new userandid(snapshot1.child("image").getValue().toString() ,snapshot1.child("id").getValue().toString() ));
                 Collections.reverse(users);
                  usersadapter.notifyDataSetChanged();
 
