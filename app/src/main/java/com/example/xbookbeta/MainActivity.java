@@ -66,10 +66,8 @@ public class MainActivity extends AppCompatActivity   {
 
             @Override
             public void onPageSelected(int position) {
-               if(position == 1) {
-                   chipNavigationBar.setItemSelected(R.id.nearby , true);
-                   Toast.makeText(MainActivity.this, "a", Toast.LENGTH_SHORT).show();
-               }
+               if(position == 1) chipNavigationBar.setItemSelected(R.id.nearby , true);
+
             }
 
             @Override
