@@ -102,7 +102,8 @@ public class otherprofile extends AppCompatActivity {
         findViewById(R.id.yourbooksbuttonid).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent( otherprofile.this , userhistorybooks.class));
+                otherbooks.id = id ;
+                startActivity(new Intent( otherprofile.this , otherbooks.class));
             }
         });
 
