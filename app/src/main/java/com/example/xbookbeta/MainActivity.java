@@ -59,7 +59,24 @@ public class MainActivity extends AppCompatActivity   {
             }
         });
 
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+               if(position == 1) {
+                   chipNavigationBar.setItemSelected(R.id.nearby , true);
+                   Toast.makeText(MainActivity.this, "a", Toast.LENGTH_SHORT).show();
+               }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
 
@@ -81,16 +98,20 @@ public class MainActivity extends AppCompatActivity   {
 
             switch (position){
                 case 0 :
+
                     return new homefragment();
+
                 case 1 :
-  return new MapsFragmentNearby();
+                    return new MapsFragmentNearby();
 
             }
-   return new chatfragment();
+
+            return new chatfragment();
         }
 
 
     }
+
 
 
     @Override
