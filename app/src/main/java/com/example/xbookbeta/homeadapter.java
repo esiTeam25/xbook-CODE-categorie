@@ -69,7 +69,22 @@ public class homeadapter extends RecyclerView.Adapter<homeadapter.bookholder> {
             holder.bookimage.setImageBitmap(getRoundedCornerBitmap(decodedByte2 , 20));
         }
 
-            holder.title.setText(u.getLikes() );}
+            holder.title.setText(u.getLikes() );
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                bookandpublisherdetails.key = u.getKey();
+                mapactivity.image = u.getBookimage(); ;
+                Intent i = new Intent( view.getContext() , bookandpublisherdetails.class );
+                i.putExtra("id" , u.getUserid());
+                view.getContext().startActivity(i);
+
+            }
+        });
+
+    }
 
 
 
