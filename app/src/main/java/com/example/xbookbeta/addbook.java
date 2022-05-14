@@ -42,6 +42,7 @@ import java.util.HashMap;
 import uk.co.mgbramwell.geofire.android.GeoFire;
 
 public class addbook extends AppCompatActivity {
+
     Spinner categorieSpinner , stateSpinner ;
     TouchImageView bookImage;
     String categorie[] ={"select categorie" , "categorie1" , "categorie2" , "categorie3" , "categorie4" , "categorie5", "categorie6", "categorie7", "categorie8", "categorie9", "categorie0"} ;
