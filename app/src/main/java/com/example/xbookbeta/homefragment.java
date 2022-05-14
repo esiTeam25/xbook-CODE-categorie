@@ -303,6 +303,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 bookssss.clear();
 
+
                 for (DocumentChange dc : value.getDocumentChanges()){
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         bookssss.add(
