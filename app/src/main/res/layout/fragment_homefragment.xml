@@ -99,24 +99,60 @@
                         android:textColor="@color/black"
                         android:textSize="40dp"
                         />
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="70dp"
+
                         >
                         <View
                             android:layout_width="200dp"
                             android:layout_height="match_parent"
                             android:background="#A020F0"
+                            android:layout_alignParentLeft="true"
                             />
                         <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
+                            android:layout_width="250dp"
                             android:layout_height="70dp"
+                            android:layout_alignParentRight="true"
                             android:layout_gravity="center"
                             android:id="@+id/usersid"
                             android:orientation="horizontal"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             />
-                    </LinearLayout>
+
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/shimmerLayout"
+                                android:layout_width="250dp"
+
+                                android:layout_alignParentRight="true"
+                                android:layout_height="wrap_content"
+                                app:shimmer_repeat_mode="restart"
+                                app:shimmer_shape="radial">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <include layout="@layout/one_top_user"></include>
+
+                                    <include layout="@layout/one_top_user"></include>
+
+                                    <include layout="@layout/one_top_user"></include>
+
+                                    <include layout="@layout/one_top_user"></include>
+
+                                    <include layout="@layout/one_top_user"></include>
+
+                                    <include layout="@layout/one_top_user"></include>
+                                </LinearLayout>
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+
+
+                    </RelativeLayout>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,12 +160,47 @@
                         android:textColor="@color/black"
                         android:textSize="40dp"
                         />
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvid"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:orientation="horizontal" />
+                        android:layout_height="wrap_content">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:orientation="horizontal" />
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmerLayout2"
+                            android:layout_width="250dp"
+
+                            android:layout_alignParentRight="true"
+                            android:layout_height="wrap_content"
+                            app:shimmer_repeat_mode="restart"
+                            app:shimmer_shape="radial">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <include layout="@layout/gridtwo"></include>
+
+                                <include layout="@layout/gridtwo"></include>
+
+                                <include layout="@layout/gridtwo"></include>
+
+                                <include layout="@layout/gridtwo"></include>
+
+                                <include layout="@layout/gridtwo"></include>
+
+                                <include layout="@layout/gridtwo"></include>
+                            </LinearLayout>
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+
+                    </RelativeLayout>
+
                     <Button
                         android:layout_width="match_parent"
                         android:layout_marginTop="20dp"

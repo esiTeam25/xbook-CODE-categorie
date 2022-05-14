@@ -9,7 +9,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:id="@+id/topuserid"
-        android:src="@color/black"
+        android:src="#B3B3B3"
         />
 
 </LinearLayout>

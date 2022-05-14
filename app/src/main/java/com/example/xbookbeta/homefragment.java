@@ -25,6 +25,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -55,6 +57,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
     private DrawerLayout drawerLayout ;
     private Button menubutton , notifs ;
     ProgressBar prgrsbr;
+    ShimmerFrameLayout shimmerFrameLayout2 ;
     RecyclerView rv ;
     homeadapter rva =  new homeadapter(bookssss) ;
     public static ArrayList<onebook> bookssss = new ArrayList<>() ;
@@ -128,9 +131,12 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
             }
         });
 
-        RecyclerView usersrv = v.findViewById(R.id.usersid);
+       ShimmerFrameLayout shimmerFrameLayout  = v.findViewById(R.id.shimmerLayout);
+        shimmerFrameLayout.startShimmer();
+        RecyclerView usersrv =v.findViewById(R.id.usersid);
        ArrayList<userandid> users = new ArrayList<userandid>() ;
         topuseradapter usersadapter = new topuseradapter(users);
+        usersrv.setHasFixedSize(true);
         usersrv.setAdapter(usersadapter);
         FirebaseDatabase.getInstance().getReference().child("users").orderByChild("likes").limitToLast(6).addValueEventListener(new ValueEventListener() {
             @Override
@@ -138,6 +144,8 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
                 users.clear();
                 for(DataSnapshot snapshot1 : snapshot.getChildren() ) users.add(new userandid(snapshot1.child("image").getValue().toString() ,snapshot1.child("id").getValue().toString() ));
                 Collections.reverse(users);
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.INVISIBLE);
                  usersadapter.notifyDataSetChanged();
 
 
@@ -174,6 +182,8 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
         rv.setLayoutManager(lm);
         bookssss.clear();
 
+        shimmerFrameLayout2  =v.findViewById(R.id.shimmerLayout2);
+        shimmerFrameLayout2.startShimmer();
         addelements();
 
 
@@ -215,11 +225,11 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
 
-
         FirebaseFirestore.getInstance().collection("books").orderBy("likes", Query.Direction.DESCENDING).limit(5).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                bookssss.clear();
+                //bookssss.clear();
+                shimmerFrameLayout2.setVisibility(View.VISIBLE);
 
 
                 for (DocumentChange dc : value.getDocumentChanges()){
@@ -232,6 +242,8 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
 
                 }
+                shimmerFrameLayout2.stopShimmer();
+                shimmerFrameLayout2.setVisibility(View.INVISIBLE);
                 rva.notifyDataSetChanged();
 
             }
