@@ -121,6 +121,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if ( !snapshot.child("image").getValue().toString().equals("" ) ) {
                     byte[] decodedString = Base64.decode(snapshot.child("image").getValue().toString(), Base64.DEFAULT);
+                    v.findViewById(R.id.shimmerLayout3).setVisibility(View.INVISIBLE);
                     prflimg.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
                 }
             }

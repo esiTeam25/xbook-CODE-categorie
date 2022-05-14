@@ -17,7 +17,7 @@
         android:orientation="vertical"
         >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:id="@+id/lnr"
@@ -26,34 +26,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="menu"
+                android:layout_alignParentLeft="true"
                 android:id="@+id/menubuttonid"
                 android:layout_gravity="start"
                 />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                />
+
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
+                android:layout_toLeftOf="@id/profileImageId"
                 android:text="search"
                 android:id="@+id/notifsid"
                 />
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_marginLeft="2dp"
                 android:layout_width="60dp"
+                android:layout_alignParentRight="true"
                 android:id="@+id/profileImageId"
                 android:layout_height="60dp"
                 android:src="@color/black"
                 android:layout_gravity="center"
                 />
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerLayout3"
+                android:layout_width="wrap_content"
+
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"
+                app:shimmer_repeat_mode="restart"
+                app:shimmer_shape="radial">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="60dp"
+                    android:src="#D3D3D3"
+                    android:layout_gravity="center"/>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
 
 
-        </LinearLayout>
+
+        </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -105,10 +122,11 @@
 
                         >
                         <View
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="#A020F0"
                             android:layout_alignParentLeft="true"
+                            android:layout_toLeftOf="@id/usersid"
                             />
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="250dp"
