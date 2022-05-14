@@ -116,7 +116,13 @@ chat extends AppCompatActivity {
                 .orderBy("realtime")
                 .addSnapshotListener(eventListener);
 */
-        FirebaseDatabase.getInstance().getReference().child("chat").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
+        prflimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                otherprofile.id = getIntent().getExtras().getString("id");
+                startActivity(new Intent(chat.this, otherprofile.class));
+            }
+        });        FirebaseDatabase.getInstance().getReference().child("chat").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
