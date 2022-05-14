@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -46,7 +47,7 @@ public class chatfragment extends Fragment {
     private recentadapter adptr ;
     private RecyclerView rv ;
     private ArrayList<recentuser> rvlst ;
-
+    ShimmerFrameLayout shimmerFrameLayout ;
 
 
     @Override
@@ -60,6 +61,7 @@ public class chatfragment extends Fragment {
         rv.setLayoutManager( new LinearLayoutManager(getContext()));
         adptr = new recentadapter(rvlst);
         rv.setAdapter(adptr);
+        shimmerFrameLayout = v.findViewById(R.id.shimmerLayout);
         getRecentUpdates();
 
 
@@ -67,19 +69,6 @@ public class chatfragment extends Fragment {
 
         return v ;
     }
-/*
-    @Override
-    public void onPause() {
-        super.onPause();
-        rv.removeAllViewsInLayout();
-        rvlst.clear();
-        adptr.notifyItemRangeRemoved(rvlst.size() , rvlst.size());
-        Toast.makeText(getContext(), "onpause", Toast.LENGTH_SHORT).show();
-
-
-    }*/
-
-
 
 
 
@@ -97,67 +86,9 @@ public class chatfragment extends Fragment {
         //getRecentUpdates();
     }
 
-/*
-    private final EventListener<QuerySnapshot> eventListener  =(value, error) -> {
-       rv.removeAllViewsInLayout();
-        rvlst.clear();
-        adptr.notifyItemRangeRemoved(rvlst.size() , rvlst.size());
-
-                    for (DocumentChange dc : value.getDocumentChanges()){
-
-                            rvlst.add (
-                                    new recentuser(
-                                            dc.getDocument().getString("name" ),
-                                            ""
-                                            ,dc.getDocument().getId().toString()
-                                            ,dc.getDocument().getString("msg")
-                                            ,dc.getDocument().get("time")
-
-                                    )
-                            ) ;
-
-
-                            //gillette();
-                        }
-
-                    // Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
-                   // Collections.reverse(rvlst);
-                    adptr.notifyDataSetChanged();
-
-
-
-
-
-
-
-
-    };
-*/
 
     public void getRecentUpdates() {
-       /* FirebaseFirestore.getInstance().collection("recent").document("plus")
-                .collection(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).orderBy("time" , Query.Direction.DESCENDING).get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for(DocumentSnapshot dc : queryDocumentSnapshots){
-                            rvlst.add (
-                                    new recentuser(
-                                            dc.getString("name" ).toString(),
-                                            ""
-                                            ,dc.getId().toString()
-                                            ,dc.getString("msg").toString()
-                                            ,dc.get("time")
 
-                                    )
-
-
-                            ) ;
-                            Toast.makeText(getContext(), dc.getString("name" ), Toast.LENGTH_SHORT).show();
-                        }
-                        //Collections.reverse(rvlst);
-                        adptr.notifyDataSetChanged();  }
-                });*/
         FirebaseDatabase.getInstance().getReference().child("recent").child("plus").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .orderByChild("time").addValueEventListener(new ValueEventListener() {
             @Override
@@ -181,9 +112,10 @@ public class chatfragment extends Fragment {
 
 
                     ) ;
-                    //Collections.reverse(rvlst);
-                    //adptr.notifyDataSetChanged();
+
                     }
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.INVISIBLE);
 Collections.reverse(rvlst);
                 adptr.notifyDataSetChanged();
 
@@ -197,40 +129,4 @@ Collections.reverse(rvlst);
     }
 
 
-/*
-    public void gillette() {
-        FirebaseFirestore.getInstance().collection("recent").document("plus")
-                .collection(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).orderBy("time")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                rv.removeAllViewsInLayout();
-                rvlst.clear();
-                for (QueryDocumentSnapshot document : task.getResult()) {
-
-                    rvlst.add (
-                            new recentuser(
-                                    document.get("name" ).toString(),
-                                    ""
-                                    ,document.getId().toString()
-                                    ,document.get("msg").toString()
-                                    ,document.get("time")
-
-                            )
-
-
-                    ) ;
-
-                }
-                Collections.reverse(rvlst);
-                adptr.notifyDataSetChanged();
-                //   adptr.notifyItemRangeInserted(rvlst.size(),rvlst.size());
-            }
-
-
-
-        });
-
-    }*/
 }
