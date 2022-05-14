@@ -1,72 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".bookandpublisherdetails">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:id="@+id/profileImageId"
-        android:src="@color/white"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:id="@+id/profileNameid"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/profileImageId"
+            android:src="@color/white"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:id="@+id/profileNameid"
 
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:text="like"
-        android:id="@+id/like"
-        />
+            android:text="like"
+            android:id="@+id/like"
+            />
 
-    <com.ortiz.touchview.TouchImageView
-        android:id="@+id/bookImageId"
-        android:layout_width="188dp"
-        android:layout_height="300dp"
-        android:layout_marginHorizontal="20dp"
-        android:src="#FFA500"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <com.ortiz.touchview.TouchImageView
+            android:id="@+id/bookImageId"
+            android:layout_width="188dp"
+            android:layout_height="300dp"
+            android:layout_marginHorizontal="20dp"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-android:text="location"
-        android:id="@+id/locationid"
-        />
+            android:text="location"
+            android:id="@+id/locationid"
+            />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:text="send message"
-        android:id="@+id/sendmessageid"
+            android:text="send message"
+            android:id="@+id/sendmessageid"
 
-        />
+            />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:text="phone call"
-        android:id="@+id/phonecallid"
-      />
+            android:text="phone call"
+            android:id="@+id/phonecallid"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:id="@+id/bookDescriptionId"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:id="@+id/bookDescriptionId"
 
-        />
+            />
 
-</LinearLayout>
+    </LinearLayout>
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/shimmerLayout"
+        android:layout_height="match_parent"
+        >
+        <include layout="@layout/shimmerdetails"></include>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</RelativeLayout>

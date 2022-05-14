@@ -132,7 +132,7 @@ static  String bookimage ;//= null ;
 
                             }
                         });
-
+                        findViewById(R.id.shimmerLayout).setVisibility(View.INVISIBLE);
                     }
                 });
 
