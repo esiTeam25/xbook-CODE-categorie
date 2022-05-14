@@ -82,8 +82,7 @@ public class MainActivity extends AppCompatActivity   {
                 case 0 :
                     return new homefragment();
                 case 1 :
-
-                    return new MapsFragmentNearby();
+  return new MapsFragmentNearby();
 
             }
    return new chatfragment();
