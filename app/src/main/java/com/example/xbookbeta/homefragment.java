@@ -56,7 +56,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
     private Button menubutton , notifs ;
     ProgressBar prgrsbr;
     RecyclerView rv ;
-    profilebooksadapter rva =  new profilebooksadapter(bookssss) ;
+    homeadapter rva =  new homeadapter(bookssss) ;
     public static ArrayList<onebook> bookssss = new ArrayList<>() ;
 
     Boolean end = false ;
@@ -308,7 +308,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         bookssss.add(
                                 new
-                                        onebook(  dc.getDocument().getString("image") ,dc.getDocument().getString("title") , dc.getDocument().getString("categorie") , dc.getDocument().getDouble("latitude")  , dc.getDocument().getDouble("longitude"))) ;
+                                        onebook( dc.getDocument().getString("id") , dc.getDocument().getString("image") ,dc.getDocument().getId() , dc.getDocument().getLong("likes").toString())) ;
                     }
 
 

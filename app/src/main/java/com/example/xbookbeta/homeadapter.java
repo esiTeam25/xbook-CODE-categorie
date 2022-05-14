@@ -68,10 +68,10 @@ public class homeadapter extends RecyclerView.Adapter<homeadapter.bookholder> {
             Bitmap decodedByte2 = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
             holder.bookimage.setImageBitmap(getRoundedCornerBitmap(decodedByte2 , 20));
         }
-        if(u.getTitle()!=null) {
-            holder.title.setText(u.getTitle());}
 
-    }
+            holder.title.setText(u.getLikes() );}
+
+
 
 
 
@@ -93,7 +93,7 @@ public class homeadapter extends RecyclerView.Adapter<homeadapter.bookholder> {
 
         public bookholder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.likesid);
+            title = itemView.findViewById(R.id.likes);
             bookimage = itemView.findViewById(R.id.bookImageId);
         }
     }
