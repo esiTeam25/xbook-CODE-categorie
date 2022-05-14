@@ -66,7 +66,7 @@ public class homeadapter extends RecyclerView.Adapter<homeadapter.bookholder> {
         if(u.getBookimage() != null) {
             byte[] decodedString2 = Base64.decode(u.getBookimage(), Base64.DEFAULT);
             Bitmap decodedByte2 = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
-            holder.bookimage.setImageBitmap(getRoundedCornerBitmap(decodedByte2 , 20));
+            holder.bookimage.setImageBitmap(decodedByte2);
         }
 
             holder.title.setText(u.getLikes() );
@@ -112,25 +112,5 @@ public class homeadapter extends RecyclerView.Adapter<homeadapter.bookholder> {
             bookimage = itemView.findViewById(R.id.bookImageId);
         }
     }
-    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
-                .getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
 
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        final RectF rectF = new RectF(rect);
-        final float roundPx = pixels;
-
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-
-        return output;
-    }
 }

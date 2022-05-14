@@ -17,45 +17,54 @@
         android:orientation="vertical"
         >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
+
+        <androidx.cardview.widget.CardView
             android:id="@+id/lnr"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:cardElevation="14dp"
+            android:splitMotionEvents="true"
             >
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="menu"
-                android:layout_alignParentLeft="true"
+
+            <ImageView
                 android:id="@+id/menubuttonid"
-                android:layout_gravity="start"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/menus"
+                android:text="menu"
+
                 />
 
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:layout_toLeftOf="@id/profileImageId"
-                android:text="search"
+            <ImageView
                 android:id="@+id/notifsid"
-                />
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginLeft="2dp"
-                android:layout_width="60dp"
-                android:layout_alignParentRight="true"
-                android:id="@+id/profileImageId"
-                android:layout_height="60dp"
-                android:src="@color/black"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
-                />
+                android:layout_marginLeft="110dp"
+                android:src="@drawable/serche"
+                android:text="search" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImageId"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="160dp"
+                android:src="@color/black" />
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmerLayout3"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
 
                 android:layout_alignParentRight="true"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+
                 app:shimmer_repeat_mode="restart"
+                android:layout_marginLeft="160dp"
                 app:shimmer_shape="radial">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -67,10 +76,7 @@
                     android:layout_gravity="center"/>
             </com.facebook.shimmer.ShimmerFrameLayout>
 
-
-
-
-        </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -88,63 +94,110 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     >
-                    <View
+                    <com.smarteist.autoimageslider.SliderView
+                        android:id="@+id/slider"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginRight="3dp"
-                        android:layout_height="200dp"
-                        android:background=" #964B00"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Categories"
-                        android:textColor="@color/black"
-                        android:textSize="40dp"
-                        />
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
+                        app:sliderIndicatorSelectedColor="@color/purpule_app"
+
                         android:layout_height="150dp"
-                        android:id="@+id/categoriesId"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        />
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/slider_image_background"
+                        app:sliderAnimationDuration="600"
+                        app:sliderAutoCycleDirection="back_and_forth"
+                        app:sliderIndicatorAnimationDuration="600"
+                        app:sliderIndicatorEnabled="true"
+                        app:sliderIndicatorGravity="end|bottom"
+                        app:sliderIndicatorMargin="15dp"
+                        app:sliderIndicatorOrientation="horizontal"
+                        app:sliderIndicatorPadding="3dp"
+                        app:sliderIndicatorRadius="2dp"
+                        app:sliderIndicatorUnselectedColor="#FFFFFF"
+                        app:sliderScrollTimeInSec="1" />
                     <TextView
+                        android:textColor="@color/black"
+                        android:textSize="25dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Categories" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/categoriesId"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    <TextView
+                        android:textSize="25dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="users of mounth"
                         android:textColor="@color/black"
-                        android:textSize="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Users of mounth"
+
                         />
                     <RelativeLayout
+                        android:layout_height="94dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:background="@drawable/usersofthemonth_background">
 
-                        >
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#A020F0"
-                            android:layout_alignParentLeft="true"
-                            android:layout_toLeftOf="@id/usersid"
-                            />
+
+                        <LinearLayout
+                            android:id="@+id/idid"
+                            android:layout_width="150dp"
+                            android:layout_height="94dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="39dp"
+                                android:layout_height="39dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="20dp"
+                                android:src="@drawable/crown" />
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="users of the month"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                        </LinearLayout>
                         <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="250dp"
-                            android:layout_height="70dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="center"
                             android:id="@+id/usersid"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/idid"
+                            android:layout_gravity="center"
+                            android:layout_alignParentRight="true"
+
+                            android:fadingEdgeLength="50dp"
                             android:orientation="horizontal"
+                            android:requiresFadingEdge="horizontal"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
                             />
 
 
                             <com.facebook.shimmer.ShimmerFrameLayout
                                 android:id="@+id/shimmerLayout"
-                                android:layout_width="250dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_centerVertical="true"
 
+                                android:layout_toRightOf="@+id/idid"
+                                android:layout_gravity="center"
                                 android:layout_alignParentRight="true"
-                                android:layout_height="wrap_content"
                                 app:shimmer_repeat_mode="restart"
                                 app:shimmer_shape="radial">
 
@@ -171,21 +224,37 @@
 
 
                     </RelativeLayout>
-                    <TextView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Best right now"
-                        android:textColor="@color/black"
-                        android:textSize="40dp"
-                        />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="25dp"
+                            android:text="Books for you" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="See All"
+                            android:textSize="18dp"
+                            android:gravity="center_horizontal"
+                            android:layout_marginLeft="160dp"
+                            android:textColor="@color/purpule_app"/>
+                    </LinearLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rvid"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
                             android:orientation="horizontal" />
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/shimmerLayout2"
@@ -242,7 +311,7 @@
 
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="200dp"
+        android:layout_width="00dp"
         android:layout_height="match_parent"
         android:id="@+id/navigationViewid"
         app:headerLayout="@layout/header"

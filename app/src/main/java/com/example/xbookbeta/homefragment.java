@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -55,7 +56,7 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
     private TabLayout tl ;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout ;
-    private Button menubutton , notifs ;
+    private ImageView menubutton , notifs ;
     ProgressBar prgrsbr;
     ShimmerFrameLayout shimmerFrameLayout2 ;
     RecyclerView rv ;
@@ -101,16 +102,16 @@ public class homefragment extends Fragment implements NavigationView.OnNavigatio
 
         Toast.makeText(getContext(), FirstActivity.savedBooks.size()+"", Toast.LENGTH_SHORT).show();
         ArrayList<Integer> cats = new ArrayList<>();
-        cats.add(R.drawable.blue);
-        cats.add(R.drawable.orange);
-        cats.add(R.drawable.green);
-        cats.add(R.drawable.grey);
-        cats.add(R.drawable.brown);
-        cats.add(R.drawable.red);
-        cats.add(R.drawable.pink);
-        cats.add(R.drawable.yellow);
-        cats.add(R.drawable.bluetwo);
-        cats.add(R.drawable.images);
+        cats.add(R.drawable.img);
+        cats.add(R.drawable.img);
+        cats.add(R.drawable.img);
+        cats.add(R.drawable.img);
+        cats.add(R.drawable.img);
+        cats.add(R.drawable.img);
+        cats.add(R.drawable.img);
+        cats.add(R.drawable.img);
+        cats.add(R.drawable.img);
+        cats.add(R.drawable.img);
         RecyclerView rv = v.findViewById(R.id.categoriesId) ;
         rv.setAdapter(new categoriesAdapter(cats) );
 

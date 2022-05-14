@@ -6,10 +6,10 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
         android:id="@+id/topuserid"
-        android:src="#B3B3B3"
+        android:src="#D3D3D3"
         />
 
 </LinearLayout>
